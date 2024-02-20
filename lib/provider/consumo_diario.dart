@@ -6,7 +6,6 @@ class ConsumoDiario extends ChangeNotifier {
   int calorias = 0;
   double indicadorproteina = 0;
   double indicadorcalorias = 0;
-
   int proteinaAlcanzar = 0, caloriasAlcanzar = 0;
 
   void aumentarValores(BuildContext context, int proteinaA, int caloriasA) {

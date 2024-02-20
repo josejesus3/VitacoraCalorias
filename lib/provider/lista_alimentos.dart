@@ -20,7 +20,7 @@ class ListaAlimentos extends ChangeNotifier {
 
     // Convertir la lista de alimentos a una lista de cadenas JSON
     alimentoList = listAlimentos.map((alimento) {
-      return jsonEncode(alimento.toMap());
+      return jsonEncode(alimento.toMap()); 
     }).toList();
 
     // Guardar la lista de cadenas JSON en SharedPreferences
