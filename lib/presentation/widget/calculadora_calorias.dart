@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CalculadorCalorias extends StatelessWidget {
@@ -9,11 +10,33 @@ class CalculadorCalorias extends StatelessWidget {
 
     final sized = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: const Center(child: Text('Requisitos'),),),
+      floatingActionButton: Row(
+        children: [
+          const Spacer(),
+          ElevatedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.backspace_outlined),
+            label: const Text('Cancelar'),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.check_circle_outlined),
+              label: const Text('Aceptar')),
+          const Spacer(),
+        ],
+      ),
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Requisitos'),
+        ),
+      ),
       body: Column(
         children: [
-          SizedBox(
-            height: sized.height * 0.1,
+          const SizedBox(
+            height: 20,
           ),
           Row(
             children: [
@@ -64,26 +87,57 @@ class CalculadorCalorias extends StatelessWidget {
             textContrller: altura,
             icon: Icons.person_2_outlined,
           ),
-          const SizedBox(height: 20,),
-          Row(
-            children: [
-              const Spacer(),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.backspace_outlined),
-                label: const Text('Cancelar'),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.check_circle_outlined),
-                  label: const Text('Aceptar')),
-              const Spacer(),
-            ],
-          )
+          const SizedBox(
+            height: 20,
+          ),
+          const _CheckBoxGet(
+            title: 'Sedentario (poco o ningun ejercicio)',
+            value: false,
+          ),
+          const _CheckBoxGet(
+            title: 'Ligero (Deportes 1-3 dias a la semana)',
+            value: false,
+          ),
+          const _CheckBoxGet(
+            title: 'Moderado (Deportes 3-5 dias a la semana)',
+            value: false,
+          ),
+          const _CheckBoxGet(
+            title: 'Activo (Deportes 6-7 dias a la semana)',
+            value: false,
+          ),
+          const _CheckBoxGet(
+            title:
+                'Muy activo (Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia)',
+            value: false,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _CheckBoxGet extends StatelessWidget {
+  final bool value;
+  final String title;
+  const _CheckBoxGet({
+    super.key,
+    required this.value,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 280,
+      child: CheckboxListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        value: false,
+        onChanged: (value) {},
+        title: Text(title),
       ),
     );
   }

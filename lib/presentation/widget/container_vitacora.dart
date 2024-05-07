@@ -36,7 +36,6 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
       // ignore: use_build_context_synchronously
       showDialog(
           context: context, builder: (context) => const AlertDialogCustom());
-      print('Alert: $alert');
       await Future.delayed(const Duration(milliseconds: 100));
 
       prefs.setBool('alertDialog', true);
@@ -69,7 +68,6 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
             Colors.white,
           ],
           begin: Alignment.bottomLeft,
-          
           end: Alignment.bottomRight,
         ),
       ),
