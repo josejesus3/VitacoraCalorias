@@ -1,23 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CalculadorCalorias extends StatelessWidget {
   const CalculadorCalorias({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController altura = TextEditingController();
+
+    final sized = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(title: const Center(child: Text('Requisitos'),),),
       body: Column(
         children: [
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: sized.height * 0.1,
           ),
           Row(
             children: [
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  print('Presionado');
+                },
                 child: Container(
                   width: 80,
                   height: 80,
@@ -42,10 +46,43 @@ class CalculadorCalorias extends StatelessWidget {
                   child: const Icon(Icons.person_3_outlined),
                 ),
               ),
-              const Spacer()
+              const Spacer(),
             ],
           ),
-          const _FormularioRegistro()
+          _FormularioRegistro(
+            nombreCampo: 'Altura/Cm',
+            textContrller: altura,
+            icon: Icons.height_outlined,
+          ),
+          _FormularioRegistro(
+            nombreCampo: 'Peso/Kg',
+            textContrller: altura,
+            icon: Icons.monitor_weight_outlined,
+          ),
+          _FormularioRegistro(
+            nombreCampo: 'Edad',
+            textContrller: altura,
+            icon: Icons.person_2_outlined,
+          ),
+          const SizedBox(height: 20,),
+          Row(
+            children: [
+              const Spacer(),
+              ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.backspace_outlined),
+                label: const Text('Cancelar'),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.check_circle_outlined),
+                  label: const Text('Aceptar')),
+              const Spacer(),
+            ],
+          )
         ],
       ),
     );
@@ -53,16 +90,34 @@ class CalculadorCalorias extends StatelessWidget {
 }
 
 class _FormularioRegistro extends StatelessWidget {
-  final TextEditingController? textContrller;
+  final TextEditingController textContrller;
+  final IconData icon;
   final String nombreCampo;
   const _FormularioRegistro({
-    super.key,
-    this.textContrller,
+    required this.textContrller,
     required this.nombreCampo,
+    required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField();
+    final OutlineInputBorder inputBorder = OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.black));
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: SizedBox(
+        width: 200,
+        child: TextField(
+          controller: textContrller,
+          decoration: InputDecoration(
+            labelText: nombreCampo,
+            enabledBorder: inputBorder,
+            focusedBorder: inputBorder,
+            suffixIcon: Icon(icon),
+          ),
+        ),
+      ),
+    );
   }
 }

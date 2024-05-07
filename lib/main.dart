@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: const CalculadorCalorias(),
-        theme: AppTheme(selectColors: 1).getTheme(),
+        
+        theme: AppTheme(selectColors: 4).getTheme(),
       ),
     );
   }
