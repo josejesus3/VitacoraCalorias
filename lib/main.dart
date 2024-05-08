@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/config/theme/app_theme.dart';
-import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
-import 'package:vitacora_calorias/presentation/widget/calculadora_calorias.dart';
+import 'package:vitacora_calorias/presentation/screen/page_view_requisitos.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/lista_alimentos.dart';
 
@@ -24,8 +23,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const CalculadorCalorias(),
-        
+        home: const PageViewRequisitos(),
         theme: AppTheme(selectColors: 4).getTheme(),
       ),
     );

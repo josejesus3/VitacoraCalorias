@@ -1,138 +1,152 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CalculadorCalorias extends StatelessWidget {
   const CalculadorCalorias({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController altura = TextEditingController();
+    TextEditingController alturaController = TextEditingController();
+    TextEditingController pesoController = TextEditingController();
+    TextEditingController edadController = TextEditingController();
 
-    final sized = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Row(
-        children: [
-          const Spacer(),
-          ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.backspace_outlined),
-            label: const Text('Cancelar'),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.check_circle_outlined),
-              label: const Text('Aceptar')),
-          const Spacer(),
-        ],
-      ),
       appBar: AppBar(
         title: const Center(
           child: Text('Requisitos'),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  print('Presionado');
-                },
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(148, 56, 142, 60),
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Icon(Icons.person_2_outlined),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              elevation: 3,
+              child: Row(
+                children: [
+                  const Spacer(),
+                  Column(
+                    children: [
+                      _IconoCirculo(
+                        icon: Icons.person_2_outlined,
+                        onTap: () {
+                          print('Presionado');
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      _IconoCirculo(
+                        icon: Icons.person_3_outlined,
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Column(
+                    children: [
+                      _FormularioRegistro(
+                        nombreCampo: 'Altura/Cm',
+                        textController: alturaController,
+                        icon: Icons.height_outlined,
+                      ),
+                      _FormularioRegistro(
+                        nombreCampo: 'Peso/Kg',
+                        textController: pesoController,
+                        icon: Icons.monitor_weight_outlined,
+                      ),
+                      _FormularioRegistro(
+                        nombreCampo: 'Edad',
+                        textController: edadController,
+                        icon: Icons.person_2_outlined,
+                      ),
+                    ],
+                  ),
+                  const Spacer()
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const _CheckBoxGet(
+              title: 'Sedentario (poco o ningun ejercicio)',
+            ),
+            const _CheckBoxGet(
+              title: 'Ligero (Deportes 1-3 dias a la semana)',
+            ),
+            const _CheckBoxGet(
+              title: 'Moderado (Deportes 3-5 dias a la semana)',
+            ),
+            const _CheckBoxGet(
+              title: 'Activo (Deportes 6-7 dias a la semana)',
+            ),
+            const _CheckBoxGet(
+              title:
+                  'Muy activo (Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia)',
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _BotonesConfirmacion(
+                  onPressed: () {},
+                  title: 'Cancelar',
+                  icon: Icons.backspace_outlined,
                 ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Icon(Icons.person_3_outlined),
+                const SizedBox(
+                  width: 20,
                 ),
-              ),
-              const Spacer(),
-            ],
-          ),
-          _FormularioRegistro(
-            nombreCampo: 'Altura/Cm',
-            textContrller: altura,
-            icon: Icons.height_outlined,
-          ),
-          _FormularioRegistro(
-            nombreCampo: 'Peso/Kg',
-            textContrller: altura,
-            icon: Icons.monitor_weight_outlined,
-          ),
-          _FormularioRegistro(
-            nombreCampo: 'Edad',
-            textContrller: altura,
-            icon: Icons.person_2_outlined,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const _CheckBoxGet(
-            title: 'Sedentario (poco o ningun ejercicio)',
-            value: false,
-          ),
-          const _CheckBoxGet(
-            title: 'Ligero (Deportes 1-3 dias a la semana)',
-            value: false,
-          ),
-          const _CheckBoxGet(
-            title: 'Moderado (Deportes 3-5 dias a la semana)',
-            value: false,
-          ),
-          const _CheckBoxGet(
-            title: 'Activo (Deportes 6-7 dias a la semana)',
-            value: false,
-          ),
-          const _CheckBoxGet(
-            title:
-                'Muy activo (Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia)',
-            value: false,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+                _BotonesConfirmacion(
+                  onPressed: () {},
+                  title: 'Aceptar',
+                  icon: Icons.check_circle_outlined,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+class _BotonesConfirmacion extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String title;
+  final IconData icon;
+  const _BotonesConfirmacion({
+    required this.onPressed,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon),
+      label: Text(title),
+    );
+  }
+}
+
 class _CheckBoxGet extends StatelessWidget {
-  final bool value;
   final String title;
   const _CheckBoxGet({
     super.key,
-    required this.value,
     required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
+    final sized = MediaQuery.of(context).size;
     return SizedBox(
-      width: 280,
+      width: sized.width * 0.9,
       child: CheckboxListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         value: false,
@@ -144,11 +158,11 @@ class _CheckBoxGet extends StatelessWidget {
 }
 
 class _FormularioRegistro extends StatelessWidget {
-  final TextEditingController textContrller;
+  final TextEditingController textController;
   final IconData icon;
   final String nombreCampo;
   const _FormularioRegistro({
-    required this.textContrller,
+    required this.textController,
     required this.nombreCampo,
     required this.icon,
   });
@@ -161,9 +175,9 @@ class _FormularioRegistro extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: SizedBox(
-        width: 200,
+        width: 220,
         child: TextField(
-          controller: textContrller,
+          controller: textController,
           decoration: InputDecoration(
             labelText: nombreCampo,
             enabledBorder: inputBorder,
@@ -171,6 +185,31 @@ class _FormularioRegistro extends StatelessWidget {
             suffixIcon: Icon(icon),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _IconoCirculo extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+  const _IconoCirculo({
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(122, 56, 142, 60),
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(50)),
+        child: Icon(icon),
       ),
     );
   }
