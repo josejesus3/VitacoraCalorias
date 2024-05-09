@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
 
 class ResultadoPersonal extends StatelessWidget {
@@ -49,13 +50,7 @@ de una forma sana y sostenible.''',
             ),
             _BotonesConfirmacion(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const VitacoraCalorias(),
-                    barrierDismissible: true
-                  ),
-                );
+                context.go('/home');
               },
               title: 'Aceptar',
               icon: Icons.check_circle_outlined,
