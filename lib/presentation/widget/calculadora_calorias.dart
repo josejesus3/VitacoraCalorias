@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CalculadorCalorias extends StatelessWidget {
-  const CalculadorCalorias({super.key});
+  final PageController controller;
+  const CalculadorCalorias({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -10,106 +11,91 @@ class CalculadorCalorias extends StatelessWidget {
     TextEditingController pesoController = TextEditingController();
     TextEditingController edadController = TextEditingController();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Requisitos'),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
-              elevation: 3,
-              child: Row(
-                children: [
-                  const Spacer(),
-                  Column(
-                    children: [
-                      _IconoCirculo(
-                        icon: Icons.person_2_outlined,
-                        onTap: () {
-                          print('Presionado');
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      _IconoCirculo(
-                        icon: Icons.person_3_outlined,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Column(
-                    children: [
-                      _FormularioRegistro(
-                        nombreCampo: 'Altura/Cm',
-                        textController: alturaController,
-                        icon: Icons.height_outlined,
-                      ),
-                      _FormularioRegistro(
-                        nombreCampo: 'Peso/Kg',
-                        textController: pesoController,
-                        icon: Icons.monitor_weight_outlined,
-                      ),
-                      _FormularioRegistro(
-                        nombreCampo: 'Edad',
-                        textController: edadController,
-                        icon: Icons.person_2_outlined,
-                      ),
-                    ],
-                  ),
-                  const Spacer()
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const _CheckBoxGet(
-              title: 'Sedentario (poco o ningun ejercicio)',
-            ),
-            const _CheckBoxGet(
-              title: 'Ligero (Deportes 1-3 dias a la semana)',
-            ),
-            const _CheckBoxGet(
-              title: 'Moderado (Deportes 3-5 dias a la semana)',
-            ),
-            const _CheckBoxGet(
-              title: 'Activo (Deportes 6-7 dias a la semana)',
-            ),
-            const _CheckBoxGet(
-              title:
-                  'Muy activo (Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia)',
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Card(
+            elevation: 3,
+            child: Row(
               children: [
-                _BotonesConfirmacion(
-                  onPressed: () {},
-                  title: 'Cancelar',
-                  icon: Icons.backspace_outlined,
+                const Spacer(),
+                Column(
+                  children: [
+                    _IconoCirculo(
+                      icon: Icons.person_2_outlined,
+                      onTap: () {
+                        print('Presionado');
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _IconoCirculo(
+                      icon: Icons.person_3_outlined,
+                      onTap: () {},
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 20,
+                const Spacer(),
+                Column(
+                  children: [
+                    _FormularioRegistro(
+                      nombreCampo: 'Altura/Cm',
+                      textController: alturaController,
+                      icon: Icons.height_outlined,
+                    ),
+                    _FormularioRegistro(
+                      nombreCampo: 'Peso/Kg',
+                      textController: pesoController,
+                      icon: Icons.monitor_weight_outlined,
+                    ),
+                    _FormularioRegistro(
+                      nombreCampo: 'Edad',
+                      textController: edadController,
+                      icon: Icons.person_2_outlined,
+                    ),
+                  ],
                 ),
-                _BotonesConfirmacion(
-                  onPressed: () {},
-                  title: 'Aceptar',
-                  icon: Icons.check_circle_outlined,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const Spacer()
               ],
             ),
-          ],
-        ),
+          ),
+          const _CheckBoxGet(
+            title: 'Sedentario (poco o ningun ejercicio)',
+          ),
+          const _CheckBoxGet(
+            title: 'Ligero (Deportes 1-3 dias a la semana)',
+          ),
+          const _CheckBoxGet(
+            title: 'Moderado (Deportes 3-5 dias a la semana)',
+          ),
+          const _CheckBoxGet(
+            title: 'Activo (Deportes 6-7 dias a la semana)',
+          ),
+          const _CheckBoxGet(
+            title:
+                'Muy activo (Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia)',
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+         
+          const SizedBox(
+            width: 20,
+          ),
+          _BotonesConfirmacion(
+            onPressed: () {
+              controller.nextPage(
+                  duration: const Duration(milliseconds: 420),
+                  curve: Curves.easeInCirc);
+            },
+            title: 'Aceptar',
+            icon: Icons.check_circle_outlined,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
       ),
     );
   }
@@ -173,7 +159,7 @@ class _FormularioRegistro extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: Colors.black));
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 15, bottom: 15),
       child: SizedBox(
         width: 220,
         child: TextField(

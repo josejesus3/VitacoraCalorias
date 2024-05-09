@@ -24,10 +24,10 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     super.initState();
 
     context.read<ConsumoDiario>().cargarVariables();
-    _checkFirstTime();
+    
   }
 
-  _checkFirstTime() async {
+ /* _checkFirstTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {});
     bool alert = prefs.getBool('alertDialog') ?? false;
@@ -40,7 +40,7 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
 
       prefs.setBool('alertDialog', true);
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,9 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
           bottomRight: Radius.circular(8),
         ),
         gradient: LinearGradient(
+        
           colors: [
-            Colors.blue.shade100,
+            Colors.green.shade100,
             Colors.white,
           ],
           begin: Alignment.bottomLeft,
