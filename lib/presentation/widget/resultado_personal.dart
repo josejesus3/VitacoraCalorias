@@ -19,7 +19,7 @@ de una forma sana y sostenible.''',
         ),
         const _Respuestas(
           title: 'Mantener Peso',
-          imagenLocal: 'assets/barra.png',
+          imagenLocal: 'assets/balanza.png',
           textMax: '''Este consumo diario de calorías te 
 permitirá mantener tu peso actual.''',
         ),
