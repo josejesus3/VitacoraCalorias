@@ -74,6 +74,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       icon: Icons.height_outlined,
                       focus: focusAltura,
                       errorText: 'Ingresar Altura',
+                      maxLength: 3,
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Peso/Kg',
@@ -81,6 +82,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       icon: Icons.monitor_weight_outlined,
                       focus: focusPeso,
                       errorText: 'Ingresar Peso',
+                      maxLength: 4,
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Edad',
@@ -88,6 +90,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       icon: Icons.person_2_outlined,
                       focus: focusEdad,
                       errorText: 'Ingresar edad mayor a 3 años y menor a 80',
+                      maxLength: 3,
                     ),
                   ],
                 ),
@@ -332,12 +335,14 @@ class _FormularioRegistro extends StatelessWidget {
   final String nombreCampo;
   final FocusNode focus;
   final String errorText;
+  final int maxLength;
   const _FormularioRegistro({
     required this.textController,
     required this.nombreCampo,
     required this.icon,
     required this.focus,
     required this.errorText,
+    required this.maxLength,
   });
 
   @override
@@ -352,7 +357,7 @@ class _FormularioRegistro extends StatelessWidget {
         child: TextField(
           controller: textController,
           focusNode: focus,
-          maxLength: 3,
+          maxLength: maxLength,
           decoration: InputDecoration(
             labelText: nombreCampo,
             errorText:
@@ -365,7 +370,7 @@ class _FormularioRegistro extends StatelessWidget {
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9-.]'))
           ],
         ),
       ),
