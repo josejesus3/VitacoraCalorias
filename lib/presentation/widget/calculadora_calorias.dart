@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/presentation/widget/list_title_content.dart';
+import 'package:vitacora_calorias/domain/services/validacion.dart';
+
 import 'package:vitacora_calorias/provider/provider_globales.dart';
 
 class CalculadorCalorias extends StatefulWidget {
@@ -22,20 +22,10 @@ TextEditingController pesoController = TextEditingController();
 TextEditingController edadController = TextEditingController();
 
 class _CalculadorCaloriasState extends State<CalculadorCalorias> {
-  void showSnackBar(
-      BuildContext context, IconData icon, String title, String subtitle) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    SnackBar snackBar = SnackBar(
-      backgroundColor: const Color.fromARGB(122, 56, 142, 60),
-      content: ListTitleContent(icon: icon, title: title, subtitle: subtitle),
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
   @override
   Widget build(BuildContext context) {
     final providerGlobal = context.read<ProviderGlobales>();
+
     final checkValidacion = context.read<ProviderGlobales>().checkValidacion;
     final colorActiveMasculino =
         context.watch<ProviderGlobales>().colorMasculino;
@@ -154,13 +144,19 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
           ),
           _BotonesConfirmacion(
             onPressed: () {
-              validaciones(
-                  altura: int.tryParse(alturaController.text) ?? 0,
-                  peso: double.tryParse(pesoController.text) ?? 0,
-                  edad: int.tryParse(edadController.text) ?? 0,
-                  checkBox: checkValidacion,
-                  colorFemenino: colorActiveFemenino,
-                  colorMasculino: colorActiveMasculino);
+              ValidacionesUtil.validar(
+                altura: int.tryParse(alturaController.text) ?? 0,
+                peso: double.tryParse(pesoController.text) ?? 0,
+                edad: int.tryParse(edadController.text) ?? 0,
+                checkBox: checkValidacion,
+                colorFemenino: colorActiveFemenino,
+                colorMasculino: colorActiveMasculino,
+                context: context,
+                controller: widget.controller,
+                focusAltura: focusAltura,
+                focusPeso: focusPeso,
+                focusEdad: focusEdad,
+              );
             },
             title: 'Aceptar',
             icon: Icons.check_circle_outlined,
@@ -173,13 +169,16 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
     );
   }
 
-  void validaciones(
+  /*void validaciones(
       {required int altura,
       required double peso,
       required int edad,
       required int? checkBox,
       required bool colorFemenino,
       required bool colorMasculino}) {
+    final calculo = context.read<FormulaProvider>();
+    double valor = 0.0;
+    double valorGenero = 0.0;
     if (altura <= 0) {
       focusAltura.requestFocus(); // Enfoca el campo donde falta altura
 
@@ -192,7 +191,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
       return;
     }
 
-    if (edad <= 0) {
+    if (edad < 3) {
       focusEdad.requestFocus(); // Enfoca el campo donde falta edad
 
       return;
@@ -203,16 +202,62 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
       showSnackBar(context, Icons.color_lens_outlined, 'Femenino/Masculino',
           'Elegir un Genero');
       return;
-    }
+    } else {}
     if (checkBox == null) {
       // Enfoca el campo donde falta checkBox
       showSnackBar(context, Icons.check_box_outlined, 'Marcar Casilla',
           'Debes elegir entre uno de \nlos gastos energeticos');
       return;
+    } else {
+      switch (checkBox) {
+        case 0:
+          valor = 1.2;
+          break;
+        case 1:
+          valor = 1.375;
+          break;
+        case 2:
+          valor = 1.55;
+          break;
+        case 3:
+          valor = 1.725;
+          break;
+        case 4:
+          valor = 1.9;
+          break;
+        // Agrega más casos según necesites
+        default:
+          break;
+      }
     }
+
+    ///MB MASCULINO
+    if (colorMasculino == true && edad >= 18 && edad <= 30) {
+      valorGenero = 88.362;
+    } else if (colorMasculino == true && edad >= 31 && edad <= 50) {
+      valorGenero = 879;
+    } else if (colorMasculino == true && edad >= 51 && edad <= 80) {
+      valorGenero = 487.6;
+    }
+
+    ///MB FEMENINO
+    if (colorFemenino == true && edad >= 18 && edad <= 30) {
+      valorGenero = 447.593;
+    } else if (colorFemenino == true && edad >= 31 && edad <= 50) {
+      valorGenero = 795;
+    } else if (colorFemenino == true && edad >= 51 && edad <= 80) {
+      valorGenero = 593;
+    }
+
     widget.controller.nextPage(
         duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
-  }
+    calculo.calcular(
+        nuevaAltura: altura,
+        nuevoPeso: peso,
+        nuevaEdad: edad,
+        nuevaGET: valor,
+        nuevaMB: valorGenero);
+  }*/
 }
 
 class _BotonesConfirmacion extends StatelessWidget {
@@ -258,7 +303,7 @@ class _CheckBoxGet extends StatelessWidget {
         alignment: Alignment.topRight,
         children: [
           CheckboxListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
             controlAffinity: ListTileControlAffinity.leading,
             value: valueX,
             onChanged: onChanged,
@@ -294,12 +339,13 @@ class _FormularioRegistro extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: Colors.black));
     return Padding(
-      padding: const EdgeInsets.only(top: 15, bottom: 15),
+      padding: const EdgeInsets.only(top: 15, bottom: 5),
       child: SizedBox(
         width: 220,
         child: TextField(
           controller: textController,
           focusNode: focus,
+          maxLength: 3,
           decoration: InputDecoration(
             labelText: nombreCampo,
             enabledBorder: inputBorder,

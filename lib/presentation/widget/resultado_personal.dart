@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/provider/formula.dart';
 
 class ResultadoPersonal extends StatelessWidget {
   final PageController controller;
@@ -73,6 +75,7 @@ class _Respuestas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final calculo = context.watch<FormulaProvider>().resultado;
     final textStyle = Theme.of(context).textTheme.titleLarge;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -93,7 +96,7 @@ class _Respuestas extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Text('2,300', style: textStyle),
+            Text(calculo.toString(), style: textStyle),
             Text(textMax)
           ],
         ),
