@@ -20,6 +20,7 @@ final FocusNode focusEdad = FocusNode();
 TextEditingController alturaController = TextEditingController();
 TextEditingController pesoController = TextEditingController();
 TextEditingController edadController = TextEditingController();
+bool showError = false;
 
 class _CalculadorCaloriasState extends State<CalculadorCalorias> {
   @override
@@ -72,18 +73,21 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       textController: alturaController,
                       icon: Icons.height_outlined,
                       focus: focusAltura,
+                      errorText: 'Ingresar Altura',
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Peso/Kg',
                       textController: pesoController,
                       icon: Icons.monitor_weight_outlined,
                       focus: focusPeso,
+                      errorText: 'Ingresar Peso',
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Edad',
                       textController: edadController,
                       icon: Icons.person_2_outlined,
                       focus: focusEdad,
+                      errorText: 'Ingresar edad mayor a 3 años y menor a 80',
                     ),
                   ],
                 ),
@@ -157,6 +161,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                 focusPeso: focusPeso,
                 focusEdad: focusEdad,
               );
+              showError = true;
             },
             title: 'Aceptar',
             icon: Icons.check_circle_outlined,
@@ -326,11 +331,13 @@ class _FormularioRegistro extends StatelessWidget {
   final IconData icon;
   final String nombreCampo;
   final FocusNode focus;
+  final String errorText;
   const _FormularioRegistro({
     required this.textController,
     required this.nombreCampo,
     required this.icon,
     required this.focus,
+    required this.errorText,
   });
 
   @override
@@ -348,6 +355,10 @@ class _FormularioRegistro extends StatelessWidget {
           maxLength: 3,
           decoration: InputDecoration(
             labelText: nombreCampo,
+            errorText:
+                showError && (focus.hasFocus && textController.text.isEmpty)
+                    ? errorText
+                    : null,
             enabledBorder: inputBorder,
             focusedBorder: inputBorder,
             suffixIcon: Icon(icon),

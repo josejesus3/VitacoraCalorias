@@ -33,23 +33,13 @@ class ValidacionesUtil {
 
     if (altura <= 0) {
       FocusScope.of(context).requestFocus(focusAltura);
-      showSnackBar(
-        context,
-        Icons.height_outlined,
-        'Altura/Cm',
-        'Ingrese una altura válida',
-      );
+
       return;
     }
 
     if (peso <= 0) {
       FocusScope.of(context).requestFocus(focusPeso);
-      showSnackBar(
-        context,
-        Icons.monitor_weight_outlined,
-        'Peso/Kg',
-        'Ingrese un peso válido',
-      );
+
       return;
     }
 
