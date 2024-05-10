@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/presentation/widget/list_title_content.dart';
 import 'package:vitacora_calorias/provider/provider_globales.dart';
 
 class CalculadorCalorias extends StatefulWidget {
@@ -11,13 +13,30 @@ class CalculadorCalorias extends StatefulWidget {
   State<CalculadorCalorias> createState() => _CalculadorCaloriasState();
 }
 
+@override
+final FocusNode focusAltura = FocusNode();
+final FocusNode focusPeso = FocusNode();
+final FocusNode focusEdad = FocusNode();
+TextEditingController alturaController = TextEditingController();
+TextEditingController pesoController = TextEditingController();
+TextEditingController edadController = TextEditingController();
+
 class _CalculadorCaloriasState extends State<CalculadorCalorias> {
+  void showSnackBar(
+      BuildContext context, IconData icon, String title, String subtitle) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    SnackBar snackBar = SnackBar(
+      backgroundColor: const Color.fromARGB(122, 56, 142, 60),
+      content: ListTitleContent(icon: icon, title: title, subtitle: subtitle),
+      duration: const Duration(seconds: 1),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController alturaController = TextEditingController();
-    TextEditingController pesoController = TextEditingController();
-    TextEditingController edadController = TextEditingController();
-    final colorActive = context.read<ProviderGlobales>();
+    final providerGlobal = context.read<ProviderGlobales>();
+    final checkValidacion = context.read<ProviderGlobales>().checkValidacion;
     final colorActiveMasculino =
         context.watch<ProviderGlobales>().colorMasculino;
     final colorActiveFemenino = context.watch<ProviderGlobales>().colorFemenino;
@@ -37,10 +56,9 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       title: 'Masculino',
                       onTap: () {
                         setState(() {});
-                        colorActive.cambiarColorMasculino();
-                        print('Color Masculino: $colorActiveMasculino');
+                        providerGlobal.cambiarColorMasculino();
                       },
-                      colorActive: colorActiveMasculino,
+                      providerGlobal: colorActiveMasculino,
                     ),
                     const SizedBox(
                       height: 20,
@@ -50,10 +68,9 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       title: 'Femenino',
                       onTap: () {
                         setState(() {});
-                        colorActive.cambiarColorFemenino();
-                        print('Color Femenino: $colorActiveFemenino');
+                        providerGlobal.cambiarColorFemenino();
                       },
-                      colorActive: colorActiveFemenino,
+                      providerGlobal: colorActiveFemenino,
                     ),
                   ],
                 ),
@@ -64,16 +81,19 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                       nombreCampo: 'Altura/Cm',
                       textController: alturaController,
                       icon: Icons.height_outlined,
+                      focus: focusAltura,
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Peso/Kg',
                       textController: pesoController,
                       icon: Icons.monitor_weight_outlined,
+                      focus: focusPeso,
                     ),
                     _FormularioRegistro(
                       nombreCampo: 'Edad',
                       textController: edadController,
                       icon: Icons.person_2_outlined,
+                      focus: focusEdad,
                     ),
                   ],
                 ),
@@ -84,28 +104,48 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
           const SizedBox(
             height: 30,
           ),
-          const Wrap(
+          Wrap(
             children: [
               _CheckBoxGet(
                 title: 'Sedentario',
                 message: 'poco o ningun ejercicio',
+                valueX: providerGlobal.checkList[0],
+                onChanged: (value) {
+                  providerGlobal.updateCheckbox(0, value);
+                },
               ),
               _CheckBoxGet(
                 title: 'Ligero',
                 message: 'Deportes 1-3 dias a la semana',
+                valueX: providerGlobal.checkList[1],
+                onChanged: (value) {
+                  providerGlobal.updateCheckbox(1, value);
+                },
               ),
               _CheckBoxGet(
                 title: 'Moderado ',
                 message: 'Deportes 3-5 dias a la semana',
+                valueX: providerGlobal.checkList[2],
+                onChanged: (value) {
+                  providerGlobal.updateCheckbox(2, value);
+                },
               ),
               _CheckBoxGet(
                 title: 'Activo',
                 message: 'Deportes 6-7 dias a la semana',
+                valueX: providerGlobal.checkList[3],
+                onChanged: (value) {
+                  providerGlobal.updateCheckbox(3, value);
+                },
               ),
               _CheckBoxGet(
                 title: 'Muy activo ',
                 message:
                     'Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia',
+                valueX: providerGlobal.checkList[4],
+                onChanged: (value) {
+                  providerGlobal.updateCheckbox(4, value);
+                },
               ),
             ],
           ),
@@ -114,9 +154,13 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
           ),
           _BotonesConfirmacion(
             onPressed: () {
-              widget.controller.nextPage(
-                  duration: const Duration(milliseconds: 420),
-                  curve: Curves.easeInCirc);
+              validaciones(
+                  altura: int.tryParse(alturaController.text) ?? 0,
+                  peso: double.tryParse(pesoController.text) ?? 0,
+                  edad: int.tryParse(edadController.text) ?? 0,
+                  checkBox: checkValidacion,
+                  colorFemenino: colorActiveFemenino,
+                  colorMasculino: colorActiveMasculino);
             },
             title: 'Aceptar',
             icon: Icons.check_circle_outlined,
@@ -127,6 +171,47 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
         ],
       ),
     );
+  }
+
+  void validaciones(
+      {required int altura,
+      required double peso,
+      required int edad,
+      required int? checkBox,
+      required bool colorFemenino,
+      required bool colorMasculino}) {
+    if (altura <= 0) {
+      focusAltura.requestFocus(); // Enfoca el campo donde falta altura
+
+      return;
+    }
+
+    if (peso <= 0) {
+      focusPeso.requestFocus(); // Enfoca el campo donde falta peso
+
+      return;
+    }
+
+    if (edad <= 0) {
+      focusEdad.requestFocus(); // Enfoca el campo donde falta edad
+
+      return;
+    }
+
+    if (colorFemenino == false && colorMasculino == false) {
+// Enfoca el campo donde falta colorFemenino
+      showSnackBar(context, Icons.color_lens_outlined, 'Femenino/Masculino',
+          'Elegir un Genero');
+      return;
+    }
+    if (checkBox == null) {
+      // Enfoca el campo donde falta checkBox
+      showSnackBar(context, Icons.check_box_outlined, 'Marcar Casilla',
+          'Debes elegir entre uno de \nlos gastos energeticos');
+      return;
+    }
+    widget.controller.nextPage(
+        duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
   }
 }
 
@@ -153,12 +238,17 @@ class _BotonesConfirmacion extends StatelessWidget {
 class _CheckBoxGet extends StatelessWidget {
   final String title;
   final String message;
+  final bool valueX;
+  final ValueChanged onChanged;
+
   const _CheckBoxGet({
-    super.key,
     required this.title,
     required this.message,
+    required this.valueX,
+    required this.onChanged,
   });
 
+  @override
   @override
   Widget build(BuildContext context) {
     final sized = MediaQuery.of(context).size;
@@ -170,8 +260,8 @@ class _CheckBoxGet extends StatelessWidget {
           CheckboxListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
             controlAffinity: ListTileControlAffinity.leading,
-            value: false,
-            onChanged: (value) {},
+            value: valueX,
+            onChanged: onChanged,
             title: Text(title),
           ),
           Tooltip(
@@ -190,10 +280,12 @@ class _FormularioRegistro extends StatelessWidget {
   final TextEditingController textController;
   final IconData icon;
   final String nombreCampo;
+  final FocusNode focus;
   const _FormularioRegistro({
     required this.textController,
     required this.nombreCampo,
     required this.icon,
+    required this.focus,
   });
 
   @override
@@ -207,12 +299,17 @@ class _FormularioRegistro extends StatelessWidget {
         width: 220,
         child: TextField(
           controller: textController,
+          focusNode: focus,
           decoration: InputDecoration(
             labelText: nombreCampo,
             enabledBorder: inputBorder,
             focusedBorder: inputBorder,
             suffixIcon: Icon(icon),
           ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+          ],
         ),
       ),
     );
@@ -223,12 +320,12 @@ class _IconoCirculo extends StatelessWidget {
   final String imagenLocal;
   final String title;
   final VoidCallback onTap;
-  final bool colorActive;
+  final bool providerGlobal;
   const _IconoCirculo({
     required this.imagenLocal,
     required this.onTap,
     required this.title,
-    required this.colorActive,
+    required this.providerGlobal,
   });
 
   @override
@@ -240,7 +337,7 @@ class _IconoCirculo extends StatelessWidget {
           CircleAvatar(
             backgroundImage: AssetImage(imagenLocal),
             maxRadius: 45,
-            backgroundColor: colorActive == true
+            backgroundColor: providerGlobal == true
                 ? const Color.fromARGB(122, 56, 142, 60)
                 : Colors.transparent,
           ),

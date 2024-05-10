@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vitacora_calorias/presentation/widget/alert_dialog.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 
 class ContainerVitacora extends StatefulWidget {

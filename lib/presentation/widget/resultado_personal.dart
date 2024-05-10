@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
 
 class ResultadoPersonal extends StatelessWidget {
   final PageController controller;
