@@ -21,7 +21,7 @@ TextEditingController alturaController = TextEditingController();
 TextEditingController pesoController = TextEditingController();
 TextEditingController edadController = TextEditingController();
 bool showError = false;
-
+ 
 class _CalculadorCaloriasState extends State<CalculadorCalorias> {
   @override
   Widget build(BuildContext context) {
@@ -34,238 +34,141 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
 
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            elevation: 3,
-            child: Row(
-              children: [
-                const Spacer(),
-                Column(
-                  children: [
-                    _IconoCirculo(
-                      imagenLocal: 'assets/iconHombre.png',
-                      title: 'Masculino',
-                      onTap: () {
-                        setState(() {});
-                        providerGlobal.cambiarColorMasculino();
-                      },
-                      providerGlobal: colorActiveMasculino,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    _IconoCirculo(
-                      imagenLocal: 'assets/iconMujer.png',
-                      title: 'Femenino',
-                      onTap: () {
-                        setState(() {});
-                        providerGlobal.cambiarColorFemenino();
-                      },
-                      providerGlobal: colorActiveFemenino,
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Column(
-                  children: [
-                    _FormularioRegistro(
-                      nombreCampo: 'Altura/Cm',
-                      textController: alturaController,
-                      icon: Icons.height_outlined,
-                      focus: focusAltura,
-                      errorText: 'Ingresar Altura',
-                      maxLength: 3,
-                    ),
-                    _FormularioRegistro(
-                      nombreCampo: 'Peso/Kg',
-                      textController: pesoController,
-                      icon: Icons.monitor_weight_outlined,
-                      focus: focusPeso,
-                      errorText: 'Ingresar Peso',
-                      maxLength: 4,
-                    ),
-                    _FormularioRegistro(
-                      nombreCampo: 'Edad',
-                      textController: edadController,
-                      icon: Icons.person_2_outlined,
-                      focus: focusEdad,
-                      errorText: 'Ingresar edad mayor a 3 años y menor a 80',
-                      maxLength: 3,
-                    ),
-                  ],
-                ),
-                const Spacer()
-              ],
-            ),
-          ),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
-          Wrap(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _CheckBoxGet(
-                title: 'Sedentario',
-                message: 'poco o ningun ejercicio',
-                valueX: providerGlobal.checkList[0],
-                onChanged: (value) {
-                  providerGlobal.updateCheckbox(0, value);
+              _IconoCirculo(
+                imagenLocal: 'assets/iconHombre.png',
+                title: 'Masculino',
+                onTap: () {
+                  setState(() {});
+                  providerGlobal.cambiarColorMasculino();
                 },
+                providerGlobal: colorActiveMasculino,
               ),
-              _CheckBoxGet(
-                title: 'Ligero',
-                message: 'Deportes 1-3 dias a la semana',
-                valueX: providerGlobal.checkList[1],
-                onChanged: (value) {
-                  providerGlobal.updateCheckbox(1, value);
-                },
+              const SizedBox(
+                width: 20,
               ),
-              _CheckBoxGet(
-                title: 'Moderado ',
-                message: 'Deportes 3-5 dias a la semana',
-                valueX: providerGlobal.checkList[2],
-                onChanged: (value) {
-                  providerGlobal.updateCheckbox(2, value);
+              _IconoCirculo(
+                imagenLocal: 'assets/iconMujer.png',
+                title: 'Femenino',
+                onTap: () {
+                  setState(() {});
+                  providerGlobal.cambiarColorFemenino();
                 },
-              ),
-              _CheckBoxGet(
-                title: 'Activo',
-                message: 'Deportes 6-7 dias a la semana',
-                valueX: providerGlobal.checkList[3],
-                onChanged: (value) {
-                  providerGlobal.updateCheckbox(3, value);
-                },
-              ),
-              _CheckBoxGet(
-                title: 'Muy activo ',
-                message:
-                    'Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia',
-                valueX: providerGlobal.checkList[4],
-                onChanged: (value) {
-                  providerGlobal.updateCheckbox(4, value);
-                },
+                providerGlobal: colorActiveFemenino,
               ),
             ],
           ),
-          const SizedBox(
-            height: 30,
+           const SizedBox(
+            height: 10,
           ),
-          _BotonesConfirmacion(
-            onPressed: () {
-              ValidacionesUtil.validar(
-                altura: int.tryParse(alturaController.text) ?? 0,
-                peso: double.tryParse(pesoController.text) ?? 0,
-                edad: int.tryParse(edadController.text) ?? 0,
-                checkBox: checkValidacion,
-                colorFemenino: colorActiveFemenino,
-                colorMasculino: colorActiveMasculino,
-                context: context,
-                controller: widget.controller,
-                focusAltura: focusAltura,
-                focusPeso: focusPeso,
-                focusEdad: focusEdad,
-              );
-              showError = true;
+          Center(
+            child: Column(
+              
+              children: [
+                _FormularioRegistro(
+                  nombreCampo: 'Altura/Cm',
+                  textController: alturaController,
+                  icon: Icons.height_outlined,
+                  focus: focusAltura,
+                  errorText: 'Ingresar Altura',
+                  maxLength: 3,
+                ),
+                _FormularioRegistro(
+                  nombreCampo: 'Peso/Kg',
+                  textController: pesoController,
+                  icon: Icons.monitor_weight_outlined,
+                  focus: focusPeso,
+                  errorText: 'Ingresar Peso',
+                  maxLength: 4,
+                ),
+                _FormularioRegistro(
+                  nombreCampo: 'Edad',
+                  textController: edadController,
+                  icon: Icons.person_2_outlined,
+                  focus: focusEdad,
+                  errorText: 'Ingresar edad mayor a 3 años y menor a 80',
+                  maxLength: 3,
+                ),
+              ],
+            ),
+          ),
+          _CheckBoxGet(
+            title: 'Sedentario',
+            message: 'poco o ningun ejercicio',
+            valueX: providerGlobal.checkList[0],
+            onChanged: (value) {
+              providerGlobal.updateCheckbox(0, value);
             },
-            title: 'Aceptar',
-            icon: Icons.check_circle_outlined,
+          ),
+          _CheckBoxGet(
+            title: 'Ligero',
+            message: 'Deportes 1-3 dias a la semana',
+            valueX: providerGlobal.checkList[1],
+            onChanged: (value) {
+              providerGlobal.updateCheckbox(1, value);
+            },
+          ),
+          _CheckBoxGet(
+            title: 'Moderado ',
+            message: 'Deportes 3-5 dias a la semana',
+            valueX: providerGlobal.checkList[2],
+            onChanged: (value) {
+              providerGlobal.updateCheckbox(2, value);
+            },
+          ),
+          _CheckBoxGet(
+            title: 'Activo',
+            message: 'Deportes 6-7 dias a la semana',
+            valueX: providerGlobal.checkList[3],
+            onChanged: (value) {
+              providerGlobal.updateCheckbox(3, value);
+            },
+          ),
+          _CheckBoxGet(
+            title: 'Muy activo ',
+            message:
+                'Ejercicio muy fuerte y trabajo fisico diario o entrenamiento dos veces al dia',
+            valueX: providerGlobal.checkList[4],
+            onChanged: (value) {
+              providerGlobal.updateCheckbox(4, value);
+            },
           ),
           const SizedBox(
-            width: 10,
+            height: 15,
+          ),
+          Center(
+            child: _BotonesConfirmacion(
+              onPressed: () {
+                ValidacionesUtil.validar(
+                  altura: int.tryParse(alturaController.text) ?? 0,
+                  peso: double.tryParse(pesoController.text) ?? 0,
+                  edad: int.tryParse(edadController.text) ?? 0,
+                  checkBox: checkValidacion,
+                  colorFemenino: colorActiveFemenino,
+                  colorMasculino: colorActiveMasculino,
+                  context: context,
+                  controller: widget.controller,
+                  focusAltura: focusAltura,
+                  focusPeso: focusPeso,
+                  focusEdad: focusEdad,
+                );
+                showError = true;
+              },
+              title: 'Aceptar',
+              icon: Icons.check_circle_outlined,
+            ),
           ),
         ],
       ),
     );
   }
-
-  /*void validaciones(
-      {required int altura,
-      required double peso,
-      required int edad,
-      required int? checkBox,
-      required bool colorFemenino,
-      required bool colorMasculino}) {
-    final calculo = context.read<FormulaProvider>();
-    double valor = 0.0;
-    double valorGenero = 0.0;
-    if (altura <= 0) {
-      focusAltura.requestFocus(); // Enfoca el campo donde falta altura
-
-      return;
-    }
-
-    if (peso <= 0) {
-      focusPeso.requestFocus(); // Enfoca el campo donde falta peso
-
-      return;
-    }
-
-    if (edad < 3) {
-      focusEdad.requestFocus(); // Enfoca el campo donde falta edad
-
-      return;
-    }
-
-    if (colorFemenino == false && colorMasculino == false) {
-// Enfoca el campo donde falta colorFemenino
-      showSnackBar(context, Icons.color_lens_outlined, 'Femenino/Masculino',
-          'Elegir un Genero');
-      return;
-    } else {}
-    if (checkBox == null) {
-      // Enfoca el campo donde falta checkBox
-      showSnackBar(context, Icons.check_box_outlined, 'Marcar Casilla',
-          'Debes elegir entre uno de \nlos gastos energeticos');
-      return;
-    } else {
-      switch (checkBox) {
-        case 0:
-          valor = 1.2;
-          break;
-        case 1:
-          valor = 1.375;
-          break;
-        case 2:
-          valor = 1.55;
-          break;
-        case 3:
-          valor = 1.725;
-          break;
-        case 4:
-          valor = 1.9;
-          break;
-        // Agrega más casos según necesites
-        default:
-          break;
-      }
-    }
-
-    ///MB MASCULINO
-    if (colorMasculino == true && edad >= 18 && edad <= 30) {
-      valorGenero = 88.362;
-    } else if (colorMasculino == true && edad >= 31 && edad <= 50) {
-      valorGenero = 879;
-    } else if (colorMasculino == true && edad >= 51 && edad <= 80) {
-      valorGenero = 487.6;
-    }
-
-    ///MB FEMENINO
-    if (colorFemenino == true && edad >= 18 && edad <= 30) {
-      valorGenero = 447.593;
-    } else if (colorFemenino == true && edad >= 31 && edad <= 50) {
-      valorGenero = 795;
-    } else if (colorFemenino == true && edad >= 51 && edad <= 80) {
-      valorGenero = 593;
-    }
-
-    widget.controller.nextPage(
-        duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
-    calculo.calcular(
-        nuevaAltura: altura,
-        nuevoPeso: peso,
-        nuevaEdad: edad,
-        nuevaGET: valor,
-        nuevaMB: valorGenero);
-  }*/
 }
 
 class _BotonesConfirmacion extends StatelessWidget {
@@ -281,6 +184,12 @@ class _BotonesConfirmacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
+      style: ButtonStyle(
+        backgroundColor: const MaterialStatePropertyAll(
+          Color(0xFF39E079),
+        ),
+        minimumSize: MaterialStateProperty.all(const Size(350, 50)),
+      ),
       onPressed: onPressed,
       icon: Icon(icon),
       label: Text(title),
@@ -348,12 +257,12 @@ class _FormularioRegistro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OutlineInputBorder inputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
         borderSide: const BorderSide(color: Colors.black));
     return Padding(
-      padding: const EdgeInsets.only(top: 15, bottom: 5),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: SizedBox(
-        width: 220,
+        width: 350,
         child: TextField(
           controller: textController,
           focusNode: focus,
@@ -398,7 +307,7 @@ class _IconoCirculo extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: AssetImage(imagenLocal),
-            maxRadius: 45,
+            maxRadius: 30,
             backgroundColor: providerGlobal == true
                 ? const Color.fromARGB(122, 56, 142, 60)
                 : Colors.transparent,

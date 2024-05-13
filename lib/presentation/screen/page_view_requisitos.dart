@@ -15,6 +15,7 @@ class _PageViewRequisitosState extends State<PageViewRequisitos> {
   Widget build(BuildContext context) {
     PageController _controller= PageController();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Center(
           child: Text('Requisitos'),
