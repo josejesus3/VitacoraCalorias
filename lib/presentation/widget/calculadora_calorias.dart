@@ -34,7 +34,11 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
 
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -61,29 +65,39 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
               ),
             ],
           ),
-          _FormularioRegistro(
-            nombreCampo: 'Altura/Cm',
-            textController: alturaController,
-            icon: Icons.height_outlined,
-            focus: focusAltura,
-            errorText: 'Ingresar Altura',
-            maxLength: 3,
+           const SizedBox(
+            height: 10,
           ),
-          _FormularioRegistro(
-            nombreCampo: 'Peso/Kg',
-            textController: pesoController,
-            icon: Icons.monitor_weight_outlined,
-            focus: focusPeso,
-            errorText: 'Ingresar Peso',
-            maxLength: 4,
-          ),
-          _FormularioRegistro(
-            nombreCampo: 'Edad',
-            textController: edadController,
-            icon: Icons.person_2_outlined,
-            focus: focusEdad,
-            errorText: 'Ingresar edad mayor a 3 años y menor a 80',
-            maxLength: 3,
+          Center(
+            child: Column(
+              
+              children: [
+                _FormularioRegistro(
+                  nombreCampo: 'Altura/Cm',
+                  textController: alturaController,
+                  icon: Icons.height_outlined,
+                  focus: focusAltura,
+                  errorText: 'Ingresar Altura',
+                  maxLength: 3,
+                ),
+                _FormularioRegistro(
+                  nombreCampo: 'Peso/Kg',
+                  textController: pesoController,
+                  icon: Icons.monitor_weight_outlined,
+                  focus: focusPeso,
+                  errorText: 'Ingresar Peso',
+                  maxLength: 4,
+                ),
+                _FormularioRegistro(
+                  nombreCampo: 'Edad',
+                  textController: edadController,
+                  icon: Icons.person_2_outlined,
+                  focus: focusEdad,
+                  errorText: 'Ingresar edad mayor a 3 años y menor a 80',
+                  maxLength: 3,
+                ),
+              ],
+            ),
           ),
           _CheckBoxGet(
             title: 'Sedentario',
@@ -127,27 +141,29 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
             },
           ),
           const SizedBox(
-            height: 40,
+            height: 15,
           ),
-          _BotonesConfirmacion(
-            onPressed: () {
-              ValidacionesUtil.validar(
-                altura: int.tryParse(alturaController.text) ?? 0,
-                peso: double.tryParse(pesoController.text) ?? 0,
-                edad: int.tryParse(edadController.text) ?? 0,
-                checkBox: checkValidacion,
-                colorFemenino: colorActiveFemenino,
-                colorMasculino: colorActiveMasculino,
-                context: context,
-                controller: widget.controller,
-                focusAltura: focusAltura,
-                focusPeso: focusPeso,
-                focusEdad: focusEdad,
-              );
-              showError = true;
-            },
-            title: 'Aceptar',
-            icon: Icons.check_circle_outlined,
+          Center(
+            child: _BotonesConfirmacion(
+              onPressed: () {
+                ValidacionesUtil.validar(
+                  altura: int.tryParse(alturaController.text) ?? 0,
+                  peso: double.tryParse(pesoController.text) ?? 0,
+                  edad: int.tryParse(edadController.text) ?? 0,
+                  checkBox: checkValidacion,
+                  colorFemenino: colorActiveFemenino,
+                  colorMasculino: colorActiveMasculino,
+                  context: context,
+                  controller: widget.controller,
+                  focusAltura: focusAltura,
+                  focusPeso: focusPeso,
+                  focusEdad: focusEdad,
+                );
+                showError = true;
+              },
+              title: 'Aceptar',
+              icon: Icons.check_circle_outlined,
+            ),
           ),
         ],
       ),
