@@ -10,25 +10,27 @@ class PageViewRequisitos extends StatefulWidget {
 }
 
 class _PageViewRequisitosState extends State<PageViewRequisitos> {
-  
   @override
   Widget build(BuildContext context) {
-    PageController _controller= PageController();
+    PageController _controller = PageController();
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Requisitos'),
-        ),
+        backgroundColor: Colors.white,
+        title: const Text('Requisitos'),
       ),
       body: Stack(
         children: [
           PageView(
             physics: const NeverScrollableScrollPhysics(),
             pageSnapping: false,
-           controller: _controller,
-            children:  [
-              CalculadorCalorias(controller: _controller,),
-               ResultadoPersonal(controller: _controller,),
+            controller: _controller,
+            children: [
+              CalculadorCalorias(
+                controller: _controller,
+              ),
+              ResultadoPersonal(
+                controller: _controller,
+              ),
             ],
           )
         ],
