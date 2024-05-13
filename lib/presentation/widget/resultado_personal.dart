@@ -26,6 +26,10 @@ de una forma sana y sostenible.''',
           resultado: calculoBajarPeso.toString().length > 7
               ? calculoBajarPeso.toString().substring(0, 7)
               : calculoBajarPeso.toString(),
+          onTap: () {
+            alert.metaAlcanzar(140, calculoBajarPeso, true);
+            Navigator.of(context).pop();
+          },
         ),
         _Respuestas(
           title: 'Mantener Peso',
@@ -35,9 +39,13 @@ permitirá mantener tu peso actual.''',
           resultado: calculo.toString().length > 7
               ? calculo.toString().substring(0, 7)
               : calculo.toString(),
+          onTap: () {
+            alert.metaAlcanzar(140, calculo, true);
+            Navigator.of(context).pop();
+          },
         ),
         _Respuestas(
-          title: 'Ganar Peso',
+          title: 'Ganar Masa Muscular',
           imagenLocal: 'assets/masaMuscular.png',
           textMax: '''Este consumo diario de calorías te 
 permitirá ganar 0,5-1 kg por semana 
@@ -45,6 +53,10 @@ de una forma sana y sostenible.''',
           resultado: calculoSubirPeso.toString().length > 7
               ? calculoSubirPeso.toString().substring(0, 7)
               : calculoSubirPeso.toString(),
+          onTap: () {
+            alert.metaAlcanzar(140, calculoSubirPeso, true);
+            Navigator.of(context).pop();
+          },
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,14 +76,13 @@ de una forma sana y sostenible.''',
             const SizedBox(
               width: 20,
             ),
-            _BotonesConfirmacion(
+            /*_BotonesConfirmacion(
               onPressed: () {
-                alert.metaAlcanzar(140, calculo, true);
-               Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
               title: 'Aceptar',
               icon: Icons.check_circle_outlined,
-            ),
+            )*/
           ],
         ),
       ],
@@ -84,11 +95,13 @@ class _Respuestas extends StatelessWidget {
   final String textMax;
   final String title;
   final String resultado;
+  final GestureTapCallback onTap;
   const _Respuestas({
     required this.imagenLocal,
     required this.textMax,
     required this.title,
     required this.resultado,
+    required this.onTap,
   });
 
   @override
@@ -97,7 +110,7 @@ class _Respuestas extends StatelessWidget {
     return InkWell(
       splashColor: Colors.lime.shade200,
       radius: 50,
-      onTap: () {},
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15),
         child: Container(
