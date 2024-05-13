@@ -66,7 +66,7 @@ de una forma sana y sostenible.''',
             ),
             _BotonesConfirmacion(
               onPressed: () {
-                alert.metaAlcanzar(300, calculo, true);
+                alert.metaAlcanzar(140, calculo, true);
                Navigator.of(context).pop();
               },
               title: 'Aceptar',
