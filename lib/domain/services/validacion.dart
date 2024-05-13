@@ -18,8 +18,8 @@ class ValidacionesUtil {
     required bool colorMasculino,
   }) {
     final calculo = context.read<FormulaProvider>();
-    double valor = 0.0;
-    double valorGenero = 0.0;
+    double valorGET = 0.0;
+    double valorMB = 0.0;
     void showSnackBar(
         BuildContext context, IconData icon, String title, String subtitle) {
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -45,12 +45,7 @@ class ValidacionesUtil {
 
     if (edad < 3 || edad > 80) {
       FocusScope.of(context).requestFocus(focusEdad);
-      showSnackBar(
-        context,
-        Icons.person_2_outlined,
-        'Edad',
-        'Ingrese una edad válida',
-      );
+     
       return;
     }
 
@@ -71,19 +66,19 @@ class ValidacionesUtil {
     } else {
       switch (checkBox) {
         case 0:
-          valor = 1.2;
+          valorGET = 1.2;
           break;
         case 1:
-          valor = 1.375;
+          valorGET = 1.375;
           break;
         case 2:
-          valor = 1.55;
+          valorGET = 1.55;
           break;
         case 3:
-          valor = 1.725;
+          valorGET = 1.725;
           break;
         case 4:
-          valor = 1.9;
+          valorGET = 1.9;
           break;
         // Agrega más casos según necesites
         default:
@@ -93,29 +88,45 @@ class ValidacionesUtil {
 
     ///MB MASCULINO
     if (colorMasculino == true && edad >= 18 && edad <= 30) {
-      valorGenero = 88.362;
+      valorMB = 88.362;
     } else if (colorMasculino == true && edad >= 31 && edad <= 50) {
-      valorGenero = 879;
+      valorMB = 879;
     } else if (colorMasculino == true && edad >= 51 && edad <= 80) {
-      valorGenero = 487.6;
+      valorMB = 487.6;
     }
 
     ///MB FEMENINO
     if (colorFemenino == true && edad >= 18 && edad <= 30) {
-      valorGenero = 447.593;
+      valorMB = 447.593;
     } else if (colorFemenino == true && edad >= 31 && edad <= 50) {
-      valorGenero = 795;
+      valorMB = 795;
     } else if (colorFemenino == true && edad >= 51 && edad <= 80) {
-      valorGenero = 593;
+      valorMB = 593;
     }
-    controller.nextPage(
+    if(colorMasculino==true){
+controller.nextPage(
         duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
-    calculo.calcular(
+    calculo.calcularHombre(
         nuevaAltura: altura,
         nuevoPeso: peso,
         nuevaEdad: edad,
-        nuevaGET: valor,
-        nuevaMB: valorGenero);
+        nuevaGET: valorGET,
+        nuevaMB: valorMB, );
+        calculo.calculoBajarPeso();
+        calculo.calculoSubirPeso();
+    }else{
+      controller.nextPage(
+        duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
+    calculo.calcularMujer(
+        nuevaAltura: altura,
+        nuevoPeso: peso,
+        nuevaEdad: edad,
+        nuevaGET: valorGET,
+        nuevaMB: valorMB, );
+        calculo.calculoBajarPeso();
+        calculo.calculoSubirPeso();
+    }
+    
 
     // Resto de la lógica de validación...
   }

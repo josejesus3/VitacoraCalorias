@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConsumoDiario extends ChangeNotifier {
   int proteina = 0;
   int calorias = 0;
+  
   double indicadorproteina = 0;
   double indicadorcalorias = 0;
   int proteinaAlcanzar = 0, caloriasAlcanzar = 0;
@@ -80,11 +81,11 @@ class ConsumoDiario extends ChangeNotifier {
     notifyListeners();
   }
 
-  void metaAlcanzar(int prt, int kcal, bool alert) {
+  void metaAlcanzar(int prt, double kcal, bool alert) {
     if (alert) {
       proteinaAlcanzar = prt;
-      caloriasAlcanzar = kcal;
-
+      caloriasAlcanzar = int.parse(kcal.toString().substring(0, 4));
+      
       guardarVariables();
       notifyListeners();
     }

@@ -50,7 +50,7 @@ class AlertDialogCustom extends StatelessWidget {
                   content: Text(
                       'Calorias debe permanecer en estos valores 1 y 3000')));
             } else {
-              alert.metaAlcanzar(proteinas, calorias, true);
+              alert.metaAlcanzar(proteinas, 2000.0, true);
               Navigator.of(context).pop();
             }
           },

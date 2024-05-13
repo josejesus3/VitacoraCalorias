@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/config/router/app_router.dart';
 import 'package:vitacora_calorias/config/theme/app_theme.dart';
+import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
           create: (_) => FormulaProvider(),
         ),
       ],
-      child: MaterialApp.router(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        routerConfig: appRouter,
+      home: const VitacoraCalorias(),
         theme: AppTheme(selectColors: 4).getTheme(),
       ),
     );

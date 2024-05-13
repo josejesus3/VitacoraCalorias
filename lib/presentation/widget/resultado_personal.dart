@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
+import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
 class ResultadoPersonal extends StatelessWidget {
@@ -9,27 +11,40 @@ class ResultadoPersonal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final alert = context.watch<ConsumoDiario>();
+    final calculo = context.watch<FormulaProvider>().resultado;
+    final calculoBajarPeso = context.watch<FormulaProvider>().consumoBajarPeso;
+    final calculoSubirPeso = context.watch<FormulaProvider>().consumoSubirPeso;
     return Column(
       children: [
-        const _Respuestas(
+        _Respuestas(
           title: 'Perder Peso',
           imagenLocal: 'assets/bajarPeso.png',
           textMax: '''Este consumo diario de calorías te
 permitirá perder 0,5-1 kg por semana 
 de una forma sana y sostenible.''',
+          resultado: calculoBajarPeso.toString().length > 7
+              ? calculoBajarPeso.toString().substring(0, 7)
+              : calculoBajarPeso.toString(),
         ),
-        const _Respuestas(
+        _Respuestas(
           title: 'Mantener Peso',
           imagenLocal: 'assets/balanza.png',
           textMax: '''Este consumo diario de calorías te 
 permitirá mantener tu peso actual.''',
+          resultado: calculo.toString().length > 7
+              ? calculo.toString().substring(0, 7)
+              : calculo.toString(),
         ),
-        const _Respuestas(
+        _Respuestas(
           title: 'Ganar Peso',
           imagenLocal: 'assets/masaMuscular.png',
           textMax: '''Este consumo diario de calorías te 
 permitirá ganar 0,5-1 kg por semana 
 de una forma sana y sostenible.''',
+          resultado: calculoSubirPeso.toString().length > 7
+              ? calculoSubirPeso.toString().substring(0, 7)
+              : calculoSubirPeso.toString(),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +66,8 @@ de una forma sana y sostenible.''',
             ),
             _BotonesConfirmacion(
               onPressed: () {
-                context.go('/home');
+                alert.metaAlcanzar(300, calculo, true);
+               Navigator.of(context).pop();
               },
               title: 'Aceptar',
               icon: Icons.check_circle_outlined,
@@ -67,38 +83,44 @@ class _Respuestas extends StatelessWidget {
   final String imagenLocal;
   final String textMax;
   final String title;
+  final String resultado;
   const _Respuestas({
     required this.imagenLocal,
     required this.textMax,
     required this.title,
+    required this.resultado,
   });
 
   @override
   Widget build(BuildContext context) {
-    final calculo = context.watch<FormulaProvider>().resultado;
     final textStyle = Theme.of(context).textTheme.titleLarge;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Container(
-        width: 350,
-        decoration: BoxDecoration(
-            border: Border.all(), borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: textStyle,
-            ),
-            SizedBox(
-              width: 100,
-              child: Image.asset(
-                imagenLocal,
-                fit: BoxFit.cover,
+    return InkWell(
+      splashColor: Colors.lime.shade200,
+      radius: 50,
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Container(
+          width: 350,
+          decoration: BoxDecoration(
+              border: Border.all(), borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: textStyle,
               ),
-            ),
-            Text(calculo.toString(), style: textStyle),
-            Text(textMax)
-          ],
+              SizedBox(
+                width: 100,
+                child: Image.asset(
+                  imagenLocal,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Text(resultado, style: textStyle),
+              Text(textMax)
+            ],
+          ),
         ),
       ),
     );

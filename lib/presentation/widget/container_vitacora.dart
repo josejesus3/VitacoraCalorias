@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vitacora_calorias/presentation/screen/page_view_requisitos.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 
 class ContainerVitacora extends StatefulWidget {
@@ -22,10 +24,10 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     super.initState();
 
     context.read<ConsumoDiario>().cargarVariables();
-    
+    _checkFirstTime();
   }
 
- /* _checkFirstTime() async {
+  _checkFirstTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {});
     bool alert = prefs.getBool('alertDialog') ?? false;
@@ -33,17 +35,16 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     if (!alert) {
       // ignore: use_build_context_synchronously
       showDialog(
-          context: context, builder: (context) => const AlertDialogCustom());
+          context: context, builder: (context) => const PageViewRequisitos());
       await Future.delayed(const Duration(milliseconds: 100));
 
       prefs.setBool('alertDialog', true);
     }
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
     final consumoDiario = context.watch<ConsumoDiario>();
-    final reset = context.watch<ConsumoDiario>();
     final int proteina = consumoDiario.proteina;
     final int calorias = consumoDiario.calorias;
     final int proteinaAlcanzar = consumoDiario.proteinaAlcanzar;
@@ -52,6 +53,7 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     final sizeWidth = MediaQuery.of(context).size.width;
     final textfootter = Theme.of(context).textTheme.titleMedium;
     final textTitle = Theme.of(context).textTheme.titleLarge;
+
     return Container(
       width: sizeWidth,
       height: 300,
@@ -61,7 +63,6 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
           bottomRight: Radius.circular(8),
         ),
         gradient: LinearGradient(
-        
           colors: [
             Colors.green.shade100,
             Colors.white,
@@ -73,25 +74,7 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 310,
-            ),
-            child: IconButton(
-              onPressed: () {
-                setState(() {});
-                reset.proteina = 0;
-                reset.calorias = 0;
-                reset.indicadorcalorias = 0.0;
-                reset.indicadorproteina = 0.0;
-                consumoDiario.guardarVariables();
-              },
-              icon: const Icon(
-                Icons.refresh,
-                size: 27,
-              ),
-            ),
-          ),
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
