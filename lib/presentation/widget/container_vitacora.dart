@@ -1,11 +1,9 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vitacora_calorias/presentation/screen/page_view_requisitos.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
-import 'package:vitacora_calorias/provider/provider_globales.dart';
 
 class ContainerVitacora extends StatefulWidget {
   final VoidCallback? onPressedAlimentos;
@@ -26,31 +24,20 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     super.initState();
 
     context.read<ConsumoDiario>().cargarVariables();
+  
 
-    _checkFirstTime();
+    //_checkFirstTime();
   }
 
-  _checkFirstTime() async{
-    final pageView = context.read<ConsumoDiario>().checkFirstTime;
-    /*final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {});
-    bool alert = prefs.getBool('alertDialog') ?? false;
-    print(alert);*/
-print(pageView);
-    if (pageView==false) return const PageViewRequisitos();
-    // prefs.setBool('alertDialog', alert);
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     final consumoDiario = context.watch<ConsumoDiario>();
-
     final int proteina = consumoDiario.proteina;
     final int calorias = consumoDiario.calorias;
     final int proteinaAlcanzar = consumoDiario.proteinaAlcanzar;
     final int caloriasAlcanzar = consumoDiario.caloriasAlcanzar;
-    final pageView = context.read<ConsumoDiario>().checkFirstTime;
-
     final sizeWidth = MediaQuery.of(context).size.width;
     final textfootter = Theme.of(context).textTheme.titleMedium;
     final textTitle = Theme.of(context).textTheme.titleLarge;

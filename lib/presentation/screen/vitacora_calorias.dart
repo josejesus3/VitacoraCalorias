@@ -25,6 +25,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
 
     // Cargar la lista al iniciar la aplicación
     context.read<ListaAlimentos>().cargarLista();
+    context.read<ConsumoDiario>().cargarPageView();
   }
 
   @override
@@ -32,8 +33,9 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
     // Llamar a alertDialog solo en el método build
     final reset = context.watch<ConsumoDiario>();
     final consumoDiario = context.watch<ConsumoDiario>();
+    final pageView=context.read<ConsumoDiario>().checkFirstTime;
 
-    return Scaffold(
+    return pageView==false?const PageViewRequisitos(): Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
@@ -61,29 +63,31 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
       ),
       
       body: SafeArea(
-        child: Column(
-          children: [
-            ContainerVitacora(
-              onPressedAlimentos: () {
-                setState(() {
+        child: ElasticInRight(
+          child: Column(
+            children: [
+              ContainerVitacora(
+                onPressedAlimentos: () {
+                  setState(() {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const Formulario(),
+                    );
+                  });
+                },
+                onPressedCDiario: () => setState(() {
                   showDialog(
                     context: context,
-                    builder: (context) => const Formulario(),
+                    builder: (context) => const FormularioDiario(),
                   );
-                });
-              },
-              onPressedCDiario: () => setState(() {
-                showDialog(
-                  context: context,
-                  builder: (context) => const FormularioDiario(),
-                );
-              }),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const AlimetLista(),
-          ],
+                }),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const AlimetLista(),
+            ],
+          ),
         ),
       ),
     );

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConsumoDiario extends ChangeNotifier {
   int proteina = 0;
   int calorias = 0;
-  bool checkFirstTime=false;
+  bool checkFirstTime = false;
   double indicadorproteina = 0;
   double indicadorcalorias = 0;
   int proteinaAlcanzar = 0, caloriasAlcanzar = 0;
@@ -81,9 +81,23 @@ class ConsumoDiario extends ChangeNotifier {
     notifyListeners();
   }
 
-  void primerCalculo(bool echo) {
+  void primerCalculo(bool echo) async {
     checkFirstTime = echo;
-    guardarVariables();
+    guardarPageView();
+    notifyListeners();
+  }
+
+  void cargarPageView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    checkFirstTime = prefs.getBool('pageView') ?? false;
+
+    notifyListeners();
+  }
+
+  void guardarPageView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('pageView', checkFirstTime);
+
     notifyListeners();
   }
 
@@ -105,7 +119,6 @@ class ConsumoDiario extends ChangeNotifier {
     indicadorcalorias = prefs.getDouble('indicadorcalorias') ?? 0;
     proteinaAlcanzar = prefs.getInt('proteinaAlcanzar') ?? 0;
     caloriasAlcanzar = prefs.getInt(' caloriasAlcanzar') ?? 0;
-    checkFirstTime=prefs.getBool('alert')??false;
 
     notifyListeners();
   }
@@ -113,7 +126,6 @@ class ConsumoDiario extends ChangeNotifier {
   void guardarVariables() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('proteina', proteina);
-    prefs.setBool('alert', checkFirstTime);
     prefs.setInt('calorias', calorias);
     prefs.setInt('proteinaAlcanzar', proteinaAlcanzar);
     prefs.setInt(' caloriasAlcanzar', caloriasAlcanzar);

@@ -160,7 +160,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                   focusPeso: focusPeso,
                   focusEdad: focusEdad,
                 );
-                consumoDiario.primerCalculo(true);
+                
                
                 showError = true;
               },

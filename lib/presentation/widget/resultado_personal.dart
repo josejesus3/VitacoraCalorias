@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
-
 class ResultadoPersonal extends StatelessWidget {
   final PageController controller;
   const ResultadoPersonal({super.key, required this.controller});
@@ -12,6 +11,7 @@ class ResultadoPersonal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alert = context.watch<ConsumoDiario>();
+    final consumoDiario = context.watch<ConsumoDiario>();
     final calculo = context.watch<FormulaProvider>().resultado;
     final calculoBajarPeso = context.watch<FormulaProvider>().consumoBajarPeso;
     final calculoSubirPeso = context.watch<FormulaProvider>().consumoSubirPeso;
@@ -28,8 +28,14 @@ class ResultadoPersonal extends StatelessWidget {
                 ? calculoBajarPeso.toString().substring(0, 7)
                 : calculoBajarPeso.toString(),
             onTap: () {
-              alert.metaAlcanzar(140, calculoBajarPeso, true);
-              Navigator.of(context).pop();
+              if (!consumoDiario.checkFirstTime) {
+                alert.metaAlcanzar(140, calculoBajarPeso, true);
+                consumoDiario.primerCalculo(true);
+              } else {
+                alert.metaAlcanzar(140, calculoBajarPeso, true);
+                Navigator.of(context).pop();
+
+              }
             },
           ),
         ),
@@ -43,8 +49,14 @@ class ResultadoPersonal extends StatelessWidget {
                 ? calculo.toString().substring(0, 7)
                 : calculo.toString(),
             onTap: () {
-              alert.metaAlcanzar(140, calculo, true);
-              Navigator.of(context).pop();
+              if (!consumoDiario.checkFirstTime) {
+                alert.metaAlcanzar(140, calculo, true);
+                consumoDiario.primerCalculo(true);
+              } else {
+                alert.metaAlcanzar(140, calculo, true);
+                Navigator.of(context).pop();
+
+              }
             },
           ),
         ),
@@ -59,12 +71,17 @@ class ResultadoPersonal extends StatelessWidget {
                 ? calculoSubirPeso.toString().substring(0, 7)
                 : calculoSubirPeso.toString(),
             onTap: () {
-              alert.metaAlcanzar(140, calculoSubirPeso, true);
-              Navigator.of(context).pop();
+              if (!consumoDiario.checkFirstTime) {
+                alert.metaAlcanzar(140, calculoSubirPeso, true);
+                consumoDiario.primerCalculo(true);
+              } else {
+                alert.metaAlcanzar(140, calculoSubirPeso, true);
+                Navigator.of(context).pop();
+
+              }
             },
           ),
         ),
-        
         FadeInUp(
           child: _BotonesConfirmacion(
             onPressed: () {
