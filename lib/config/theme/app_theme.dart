@@ -15,8 +15,8 @@ class AppTheme {
         assert(selectColors < colors.length,
             'Seleccolors menor que ${colors.length}');
 
-  ThemeData getTheme() =>
-      ThemeData(useMaterial3: true, 
-      appBarTheme: const AppBarTheme(backgroundColor: Color.fromARGB(122, 56, 142, 60)),
+  ThemeData getTheme() => ThemeData(
+      useMaterial3: true,
+      //appBarTheme: const AppBarTheme(backgroundColor: Color.fromARGB(122, 56, 142, 60)),
       colorSchemeSeed: colors[selectColors]);
 }
