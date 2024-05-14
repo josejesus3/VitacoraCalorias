@@ -117,6 +117,8 @@ class ValidacionesUtil {
       );
       calculo.calculoBajarPeso();
       calculo.calculoSubirPeso();
+      calculo.calculoMantener(peso);
+      calculo.calculoSubirProteina(peso);
     } else {
       controller.nextPage(
           duration: const Duration(milliseconds: 420),
@@ -130,8 +132,11 @@ class ValidacionesUtil {
       );
       calculo.calculoBajarPeso();
       calculo.calculoSubirPeso();
+      calculo.calculoMantener(peso);
+      calculo.calculoSubirProteina(peso);
     }
 
     // Resto de la lógica de validación...
   }
 }
+

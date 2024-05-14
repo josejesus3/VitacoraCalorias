@@ -12,9 +12,9 @@ class ResultadoPersonal extends StatelessWidget {
   Widget build(BuildContext context) {
     final alert = context.watch<ConsumoDiario>();
     final consumoDiario = context.watch<ConsumoDiario>();
-    final calculo = context.watch<FormulaProvider>().resultado;
-    final calculoBajarPeso = context.watch<FormulaProvider>().consumoBajarPeso;
-    final calculoSubirPeso = context.watch<FormulaProvider>().consumoSubirPeso;
+    final calculo = context.watch<FormulaProvider>();
+      
+    
     return Column(
       children: [
         FadeInLeft(
@@ -24,15 +24,15 @@ class ResultadoPersonal extends StatelessWidget {
             textMax: '''Este consumo diario de calorías te
           permitirá perder 0,5-1 kg por semana 
           de una forma sana y sostenible.''',
-            resultado: calculoBajarPeso.toString().length > 7
-                ? calculoBajarPeso.toString().substring(0, 7)
-                : calculoBajarPeso.toString(),
+            resultado: calculo.consumoBajarPeso.toString().length > 7
+                ? calculo.consumoBajarPeso.toString().substring(0, 7)
+                : calculo.consumoBajarPeso.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(140, calculoBajarPeso, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.consumoBajarPeso, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(140, calculoBajarPeso, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.consumoBajarPeso, true);
                 Navigator.of(context).pop();
 
               }
@@ -45,15 +45,15 @@ class ResultadoPersonal extends StatelessWidget {
             imagenLocal: 'assets/balanza.png',
             textMax: '''Este consumo diario de calorías te 
           permitirá mantener tu peso actual.''',
-            resultado: calculo.toString().length > 7
-                ? calculo.toString().substring(0, 7)
-                : calculo.toString(),
+            resultado: calculo.resultado.toString().length > 7
+                ? calculo.resultado.toString().substring(0, 7)
+                : calculo.resultado.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(140, calculo, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.resultado, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(140, calculo, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.resultado, true);
                 Navigator.of(context).pop();
 
               }
@@ -67,15 +67,15 @@ class ResultadoPersonal extends StatelessWidget {
             textMax: '''Este consumo diario de calorías te 
           permitirá ganar 0,5-1 kg por semana 
           de una forma sana y sostenible.''',
-            resultado: calculoSubirPeso.toString().length > 7
-                ? calculoSubirPeso.toString().substring(0, 7)
-                : calculoSubirPeso.toString(),
+            resultado: calculo.consumoSubirPeso.toString().length > 7
+                ? calculo.consumoSubirPeso.toString().substring(0, 7)
+                : calculo.consumoSubirPeso.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(140, calculoSubirPeso, true);
+                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(), calculo.consumoSubirPeso, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(140, calculoSubirPeso, true);
+                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(), calculo.consumoSubirPeso, true);
                 Navigator.of(context).pop();
 
               }
