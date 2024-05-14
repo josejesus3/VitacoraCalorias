@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/presentation/widget/list_title_content.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
+import 'package:vitacora_calorias/provider/provider_globales.dart';
 
 class ValidacionesUtil {
   static void validar({
@@ -18,6 +19,7 @@ class ValidacionesUtil {
     required bool colorMasculino,
   }) {
     final calculo = context.read<FormulaProvider>();
+    
     double valorGET = 0.0;
     double valorMB = 0.0;
     void showSnackBar(
@@ -114,6 +116,8 @@ controller.nextPage(
         nuevaMB: valorMB, );
         calculo.calculoBajarPeso();
         calculo.calculoSubirPeso();
+        
+        
     }else{
       controller.nextPage(
         duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
@@ -125,6 +129,7 @@ controller.nextPage(
         nuevaMB: valorMB, );
         calculo.calculoBajarPeso();
         calculo.calculoSubirPeso();
+         
     }
     
 

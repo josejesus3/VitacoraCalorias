@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConsumoDiario extends ChangeNotifier {
   int proteina = 0;
   int calorias = 0;
-  
+  bool checkFirstTime=false;
   double indicadorproteina = 0;
   double indicadorcalorias = 0;
   int proteinaAlcanzar = 0, caloriasAlcanzar = 0;
@@ -81,11 +81,17 @@ class ConsumoDiario extends ChangeNotifier {
     notifyListeners();
   }
 
+  void primerCalculo(bool echo) {
+    checkFirstTime = echo;
+    guardarVariables();
+    notifyListeners();
+  }
+
   void metaAlcanzar(int prt, double kcal, bool alert) {
     if (alert) {
       proteinaAlcanzar = prt;
       caloriasAlcanzar = int.parse(kcal.toString().substring(0, 4));
-      
+
       guardarVariables();
       notifyListeners();
     }
@@ -99,6 +105,7 @@ class ConsumoDiario extends ChangeNotifier {
     indicadorcalorias = prefs.getDouble('indicadorcalorias') ?? 0;
     proteinaAlcanzar = prefs.getInt('proteinaAlcanzar') ?? 0;
     caloriasAlcanzar = prefs.getInt(' caloriasAlcanzar') ?? 0;
+    checkFirstTime=prefs.getBool('alert')??false;
 
     notifyListeners();
   }
@@ -106,6 +113,7 @@ class ConsumoDiario extends ChangeNotifier {
   void guardarVariables() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('proteina', proteina);
+    prefs.setBool('alert', checkFirstTime);
     prefs.setInt('calorias', calorias);
     prefs.setInt('proteinaAlcanzar', proteinaAlcanzar);
     prefs.setInt(' caloriasAlcanzar', caloriasAlcanzar);

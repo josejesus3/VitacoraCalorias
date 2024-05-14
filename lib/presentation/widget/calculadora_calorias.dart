@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/domain/services/validacion.dart';
+import 'package:vitacora_calorias/provider/consumo_diario.dart';
 
 import 'package:vitacora_calorias/provider/provider_globales.dart';
 
@@ -26,7 +27,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
   @override
   Widget build(BuildContext context) {
     final providerGlobal = context.read<ProviderGlobales>();
-
+    final consumoDiario = context.watch<ConsumoDiario>();
     final checkValidacion = context.read<ProviderGlobales>().checkValidacion;
     final colorActiveMasculino =
         context.watch<ProviderGlobales>().colorMasculino;
@@ -86,7 +87,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                   icon: Icons.monitor_weight_outlined,
                   focus: focusPeso,
                   errorText: 'Ingresar Peso',
-                  maxLength: 4,
+                  maxLength: 5,
                 ),
                 _FormularioRegistro(
                   nombreCampo: 'Edad',
@@ -159,6 +160,8 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                   focusPeso: focusPeso,
                   focusEdad: focusEdad,
                 );
+                consumoDiario.primerCalculo(true);
+               
                 showError = true;
               },
               title: 'Aceptar',

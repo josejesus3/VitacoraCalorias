@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_is_empty
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/config/theme/app_theme.dart';
 import 'package:vitacora_calorias/presentation/screen/page_view_requisitos.dart';
 import 'package:vitacora_calorias/presentation/widget/aliment_list.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
@@ -32,6 +34,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
     final consumoDiario = context.watch<ConsumoDiario>();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
           IconButton(
