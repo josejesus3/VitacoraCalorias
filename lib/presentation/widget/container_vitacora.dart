@@ -35,15 +35,9 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     final int caloriasAlcanzar = consumoDiario.caloriasAlcanzar;
     final sizeWidth = MediaQuery.of(context).size.width;
 
-    return Container(
+    return SizedBox(
       width: sizeWidth,
-      height: 300,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(8),
-          bottomRight: Radius.circular(8),
-        ),
-      ),
+      height: 280,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -67,17 +61,17 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _BotonesConfirmacion(
-                  onPressed: () => widget.onPressedAlimentos,
+                  onPressed: widget.onPressedCDiario!,
                   title: 'Consumo Diario',
                   icon: Icons.add_circle_outline_rounded),
               _BotonesConfirmacion(
-                  onPressed: () => widget.onPressedAlimentos,
+                  onPressed: widget.onPressedAlimentos!,
                   title: 'Alimentos',
                   icon: Icons.add_circle_outline_rounded)
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 5,
           )
         ],
       ),

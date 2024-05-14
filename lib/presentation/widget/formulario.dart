@@ -21,7 +21,7 @@ class _FormularioState extends State<Formulario> {
     final TextEditingController proteinasController = TextEditingController();
     final TextEditingController caloriasController = TextEditingController();
     return AlertDialog(
-      title: const Text('Consumo Diario'),
+      title: const Text('Nuevo Alimento'),
       content: SingleChildScrollView(
         child: Column(
           children: [

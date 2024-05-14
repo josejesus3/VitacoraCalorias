@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_is_empty
+// Ignora las advertencias relacionadas con el uso de isEmpty en este archivo
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
@@ -22,29 +23,33 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
   void initState() {
     super.initState();
 
-    // Cargar la lista al iniciar la aplicación
+    // Cargar la lista de alimentos al iniciar la aplicación
     context.read<ListaAlimentos>().cargarLista();
+    // Cargar la vista de página al iniciar la aplicación
     context.read<ConsumoDiario>().cargarPageView();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Llamar a alertDialog solo en el método build
+    // Obtener el valor de los proveedores
     final reset = context.watch<ConsumoDiario>();
     final consumoDiario = context.watch<ConsumoDiario>();
     final pageView = context.read<ConsumoDiario>().checkFirstTime;
     final textTitle = Theme.of(context).textTheme;
 
     return pageView == false
+        // Si checkFirstTime es falso, mostrar PageViewRequisitos
         ? const PageViewRequisitos()
+        // De lo contrario, mostrar un Scaffold con la barra de aplicación y el cuerpo
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text(
-                'Panel de Alimentacion',
+                'Panel de Consumo',
                 style: textTitle.titleLarge,
               ),
               actions: [
+                // Botón para mostrar la configuración
                 IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -52,6 +57,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
                       ));
                     },
                     icon: const Icon(Icons.settings)),
+                // Botón para restablecer los valores
                 IconButton(
                   onPressed: () {
                     setState(() {});
@@ -68,18 +74,20 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
               ],
             ),
             body: SafeArea(
+              // Animación al mostrar el cuerpo
               child: ElasticInRight(
                 child: Column(
                   children: [
+                    // Widget para agregar alimentos
                     ContainerVitacora(
-                      onPressedAlimentos: () {
-                        setState(() {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const Formulario(),
-                          );
-                        });
-                      },
+                      onPressedAlimentos: () => setState(() {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const Formulario(),
+                        );
+                      }),
+
+                      // Widget para agregar registros diarios
                       onPressedCDiario: () => setState(() {
                         showDialog(
                           context: context,
@@ -90,6 +98,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
                     const SizedBox(
                       height: 15,
                     ),
+                    // Lista de alimentos
                     const AlimetLista(),
                   ],
                 ),
