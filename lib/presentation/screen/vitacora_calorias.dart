@@ -38,10 +38,10 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
     return pageView == false
         ? const PageViewRequisitos()
         : Scaffold(
-            backgroundColor: Colors.white,
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: Text(
-                'Calorias y Proteinas',
+                'Panel de Alimentacion',
                 style: textTitle.titleLarge,
               ),
               actions: [
