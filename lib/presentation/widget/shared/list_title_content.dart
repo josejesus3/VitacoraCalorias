@@ -13,17 +13,17 @@ class ListTitleContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: Icon(
-          icon,
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        subtitle: Text(
-          subtitle,
-          style: const TextStyle(color: Colors.white),
-        ),
-      );
+      leading: Icon(
+        icon,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 20),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(color: Colors.white),
+      ),
+    );
   }
 }

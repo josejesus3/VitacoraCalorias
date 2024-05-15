@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/presentation/widget/list_title_content.dart';
+import 'package:vitacora_calorias/presentation/widget/shared/list_title_content.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
 class ValidacionesUtil {
@@ -139,4 +139,3 @@ class ValidacionesUtil {
     // Resto de la lógica de validación...
   }
 }
-
