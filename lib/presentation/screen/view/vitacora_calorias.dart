@@ -4,7 +4,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/presentation/screen/page_view_requisitos.dart';
+import 'package:vitacora_calorias/presentation/screen/view/page_view_requisitos.dart';
 import 'package:vitacora_calorias/presentation/widget/aliment_list.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/lista_alimentos.dart';
@@ -52,9 +52,11 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
                 // Botón para mostrar la configuración
                 IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const PageViewRequisitos(),
-                      ));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PageViewRequisitos(),
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.settings)),
                 // Botón para restablecer los valores
@@ -104,13 +106,6 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
                 ),
               ),
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              items:const [
-                BottomNavigationBarItem(icon: Icon(Icons.house_outlined)),
-                BottomNavigationBarItem(icon: Icon(Icons.format_list_bulleted))
-
-
-            ] )
           );
   }
 }
