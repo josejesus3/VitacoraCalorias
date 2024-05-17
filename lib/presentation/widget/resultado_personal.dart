@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/presentation/widget/shared/boton_confirmacion.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
@@ -13,8 +14,7 @@ class ResultadoPersonal extends StatelessWidget {
     final alert = context.watch<ConsumoDiario>();
     final consumoDiario = context.watch<ConsumoDiario>();
     final calculo = context.watch<FormulaProvider>();
-      
-    
+
     return Column(
       children: [
         FadeInLeft(
@@ -29,12 +29,13 @@ class ResultadoPersonal extends StatelessWidget {
                 : calculo.consumoBajarPeso.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.consumoBajarPeso, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(),
+                    calculo.consumoBajarPeso, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.consumoBajarPeso, true);
+                alert.metaAlcanzar(calculo.proteinaMantener.toInt(),
+                    calculo.consumoBajarPeso, true);
                 Navigator.of(context).pop();
-
               }
             },
           ),
@@ -50,12 +51,13 @@ class ResultadoPersonal extends StatelessWidget {
                 : calculo.resultado.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.resultado, true);
+                alert.metaAlcanzar(
+                    calculo.proteinaMantener.toInt(), calculo.resultado, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(calculo.proteinaMantener.toInt(), calculo.resultado, true);
+                alert.metaAlcanzar(
+                    calculo.proteinaMantener.toInt(), calculo.resultado, true);
                 Navigator.of(context).pop();
-
               }
             },
           ),
@@ -72,18 +74,19 @@ class ResultadoPersonal extends StatelessWidget {
                 : calculo.consumoSubirPeso.toString(),
             onTap: () {
               if (!consumoDiario.checkFirstTime) {
-                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(), calculo.consumoSubirPeso, true);
+                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(),
+                    calculo.consumoSubirPeso, true);
                 consumoDiario.primerCalculo(true);
               } else {
-                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(), calculo.consumoSubirPeso, true);
+                alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(),
+                    calculo.consumoSubirPeso, true);
                 Navigator.of(context).pop();
-
               }
             },
           ),
         ),
         FadeInUp(
-          child: _BotonesConfirmacion(
+          child: BotonesConfirmacion(
             onPressed: () {
               controller.previousPage(
                   duration: const Duration(milliseconds: 300),
@@ -144,32 +147,6 @@ class _Respuestas extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _BotonesConfirmacion extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String title;
-  final IconData icon;
-  const _BotonesConfirmacion({
-    required this.onPressed,
-    required this.title,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      style: ButtonStyle(
-        backgroundColor: const MaterialStatePropertyAll(
-          Color(0xFF39E079),
-        ),
-        minimumSize: MaterialStateProperty.all(const Size(350, 50)),
-      ),
-      onPressed: onPressed,
-      icon: Icon(icon),
-      label: Text(title),
     );
   }
 }

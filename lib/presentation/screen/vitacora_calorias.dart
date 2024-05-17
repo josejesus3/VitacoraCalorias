@@ -9,7 +9,7 @@ import 'package:vitacora_calorias/presentation/widget/aliment_list.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/lista_alimentos.dart';
 import 'package:vitacora_calorias/presentation/widget/container_vitacora.dart';
-import 'package:vitacora_calorias/presentation/widget/formulario.dart';
+import 'package:vitacora_calorias/presentation/widget/shared/formulario.dart';
 
 class VitacoraCalorias extends StatefulWidget {
   const VitacoraCalorias({super.key});
