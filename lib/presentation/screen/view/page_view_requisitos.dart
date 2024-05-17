@@ -19,7 +19,7 @@ class _PageViewRequisitosState extends State<PageViewRequisitos> {
   @override
   Widget build(BuildContext context) {
     // Controlador de la página
-    PageController _controller = PageController();
+    PageController controller = PageController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -32,17 +32,17 @@ class _PageViewRequisitosState extends State<PageViewRequisitos> {
             physics:
                 const NeverScrollableScrollPhysics(), // Desactivar desplazamiento
             pageSnapping: false, // Desactivar ajuste de página
-            controller: _controller, // Controlador de la página
+            controller: controller, // Controlador de la página
             children: [
               ElasticInRight(
                 child: CalculadorCalorias(
                   controller:
-                      _controller, // Pasar el controlador a la CalculadoraCalorias
+                      controller, // Pasar el controlador a la CalculadoraCalorias
                 ),
               ),
               ResultadoPersonal(
                 controller:
-                    _controller, // Pasar el controlador a ResultadoPersonal
+                    controller, // Pasar el controlador a ResultadoPersonal
               ),
             ],
           )

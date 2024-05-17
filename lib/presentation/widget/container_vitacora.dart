@@ -87,7 +87,6 @@ class _LinearProgress extends StatelessWidget {
   final String title;
   final double consumoDiario;
   const _LinearProgress({
-    super.key,
     required this.sizeWidth,
     required this.consumoDiario,
     required this.porcentaje,

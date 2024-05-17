@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vitacora_calorias/presentation/screen/view/page_view_requisitos.dart';
+import 'package:vitacora_calorias/presentation/screen/view/productos_alimenticios.dart';
 import 'package:vitacora_calorias/presentation/screen/view/vitacora_calorias.dart';
 import 'package:vitacora_calorias/presentation/widget/shared/botton_navigator.dart';
 
@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const List<Widget> viewRoutes = [
       VitacoraCalorias(),
-      PageViewRequisitos(),
+      ProductosAlimenticios(),
     ];
     return Scaffold(
       body: IndexedStack(
