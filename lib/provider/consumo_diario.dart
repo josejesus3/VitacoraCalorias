@@ -51,11 +51,10 @@ class ConsumoDiario extends ChangeNotifier {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: const Color.fromARGB(228, 160, 213, 238),
-            shadowColor: Colors.lightBlueAccent,
+            
             content: const Text(
               '¡Felicidades! Has completado tu consumo diario de proteínas y calorías.',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
+              
               textAlign: TextAlign.left,
             ),
             actions: [

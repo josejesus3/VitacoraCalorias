@@ -104,6 +104,13 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
                 ),
               ),
             ),
+            bottomNavigationBar: BottomNavigationBar(
+              items:const [
+                BottomNavigationBarItem(icon: Icon(Icons.house_outlined)),
+                BottomNavigationBarItem(icon: Icon(Icons.format_list_bulleted))
+
+
+            ] )
           );
   }
 }

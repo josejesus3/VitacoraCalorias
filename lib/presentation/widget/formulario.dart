@@ -104,19 +104,19 @@ class FormularioDiario extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: proteinasController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Proteínas',
-              ),
-            ),
-            TextField(
               controller: caloriasController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 labelText: 'Kilocalorías',
               ),
             ),
+            TextField(
+              controller: proteinasController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Proteínas',
+              ),
+            )
           ],
         ),
       ),
