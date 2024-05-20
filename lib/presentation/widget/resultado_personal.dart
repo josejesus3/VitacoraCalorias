@@ -90,7 +90,7 @@ class ResultadoPersonal extends StatelessWidget {
             onPressed: () {
               controller.previousPage(
                   duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInCirc);
+                  curve: Curves.decelerate);
             },
             title: 'Atras',
             icon: Icons.backspace_outlined,

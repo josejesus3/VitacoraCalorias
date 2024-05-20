@@ -39,7 +39,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
 
     return pageView == false
         // Si checkFirstTime es falso, mostrar PageViewRequisitos
-        ? const PageViewRequisitos()
+        ? FadeInRight(child: const PageViewRequisitos())
         // De lo contrario, mostrar un Scaffold con la barra de aplicación y el cuerpo
         : Scaffold(
             appBar: AppBar(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/presentation/widget/list_title_content.dart';
+import 'package:vitacora_calorias/presentation/widget/shared/list_title_content.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
 class ValidacionesUtil {
@@ -18,6 +18,7 @@ class ValidacionesUtil {
     required bool colorMasculino,
   }) {
     final calculo = context.read<FormulaProvider>();
+
     double valorGET = 0.0;
     double valorMB = 0.0;
     void showSnackBar(
@@ -45,7 +46,7 @@ class ValidacionesUtil {
 
     if (edad < 3 || edad > 80) {
       FocusScope.of(context).requestFocus(focusEdad);
-     
+
       return;
     }
 
@@ -103,30 +104,39 @@ class ValidacionesUtil {
     } else if (colorFemenino == true && edad >= 51 && edad <= 80) {
       valorMB = 593;
     }
-    if(colorMasculino==true){
-controller.nextPage(
-        duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
-    calculo.calcularHombre(
-        nuevaAltura: altura,
-        nuevoPeso: peso,
-        nuevaEdad: edad,
-        nuevaGET: valorGET,
-        nuevaMB: valorMB, );
-        calculo.calculoBajarPeso();
-        calculo.calculoSubirPeso();
-    }else{
+    if (colorMasculino == true) {
       controller.nextPage(
-        duration: const Duration(milliseconds: 420), curve: Curves.easeInCirc);
-    calculo.calcularMujer(
+          duration: const Duration(milliseconds: 420),
+         //curve: Curves.easeInCirc
+         curve: Curves.decelerate
+          );
+      calculo.calcularHombre(
         nuevaAltura: altura,
         nuevoPeso: peso,
         nuevaEdad: edad,
         nuevaGET: valorGET,
-        nuevaMB: valorMB, );
-        calculo.calculoBajarPeso();
-        calculo.calculoSubirPeso();
+        nuevaMB: valorMB,
+      );
+      calculo.calculoBajarPeso();
+      calculo.calculoSubirPeso();
+      calculo.calculoMantener(peso);
+      calculo.calculoSubirProteina(peso);
+    } else {
+      controller.nextPage(
+          duration: const Duration(milliseconds: 420),
+          curve: Curves.decelerate);
+      calculo.calcularMujer(
+        nuevaAltura: altura,
+        nuevoPeso: peso,
+        nuevaEdad: edad,
+        nuevaGET: valorGET,
+        nuevaMB: valorMB,
+      );
+      calculo.calculoBajarPeso();
+      calculo.calculoSubirPeso();
+      calculo.calculoMantener(peso);
+      calculo.calculoSubirProteina(peso);
     }
-    
 
     // Resto de la lógica de validación...
   }
