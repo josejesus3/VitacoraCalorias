@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConsumoDiario extends ChangeNotifier {
   int proteina = 0;
   int calorias = 0;
-  
+  bool checkFirstTime = false;
   double indicadorproteina = 0;
   double indicadorcalorias = 0;
   int proteinaAlcanzar = 0, caloriasAlcanzar = 0;
@@ -51,11 +51,10 @@ class ConsumoDiario extends ChangeNotifier {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: const Color.fromARGB(228, 160, 213, 238),
-            shadowColor: Colors.lightBlueAccent,
+            
             content: const Text(
               '¡Felicidades! Has completado tu consumo diario de proteínas y calorías.',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
+              
               textAlign: TextAlign.left,
             ),
             actions: [
@@ -81,11 +80,31 @@ class ConsumoDiario extends ChangeNotifier {
     notifyListeners();
   }
 
+  void primerCalculo(bool echo) async {
+    checkFirstTime = echo;
+    guardarPageView();
+    notifyListeners();
+  }
+
+  void cargarPageView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    checkFirstTime = prefs.getBool('pageView') ?? false;
+
+    notifyListeners();
+  }
+
+  void guardarPageView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('pageView', checkFirstTime);
+
+    notifyListeners();
+  }
+
   void metaAlcanzar(int prt, double kcal, bool alert) {
     if (alert) {
       proteinaAlcanzar = prt;
       caloriasAlcanzar = int.parse(kcal.toString().substring(0, 4));
-      
+
       guardarVariables();
       notifyListeners();
     }
