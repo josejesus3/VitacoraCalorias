@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vitacora_calorias/presentation/screen/view/page_view_requisitos.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 
 class ContainerVitacora extends StatefulWidget {
@@ -24,22 +22,8 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     super.initState();
 
     context.read<ConsumoDiario>().cargarVariables();
-    _checkFirstTime();
-  }
 
-  _checkFirstTime() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {});
-    bool alert = prefs.getBool('alertDialog') ?? false;
-
-    if (!alert) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context, builder: (context) => const PageViewRequisitos());
-      await Future.delayed(const Duration(milliseconds: 100));
-
-      prefs.setBool('alertDialog', true);
-    }
+    //_checkFirstTime();
   }
 
   @override
@@ -49,90 +33,122 @@ class _ContainerVitacoraState extends State<ContainerVitacora> {
     final int calorias = consumoDiario.calorias;
     final int proteinaAlcanzar = consumoDiario.proteinaAlcanzar;
     final int caloriasAlcanzar = consumoDiario.caloriasAlcanzar;
-
     final sizeWidth = MediaQuery.of(context).size.width;
-    final textfootter = Theme.of(context).textTheme.titleMedium;
-    final textTitle = Theme.of(context).textTheme.titleLarge;
 
-    return Container(
+    return SizedBox(
       width: sizeWidth,
-      height: 300,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(8),
-          bottomRight: Radius.circular(8),
-        ),
-        gradient: LinearGradient(
-          colors: [
-            Colors.green.shade100,
-            Colors.white,
-          ],
-          begin: Alignment.bottomLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      height: 280,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CircularPercentIndicator(
-                lineWidth: 7,
-                animateFromLastPercent: true,
-                animation: true,
-                curve: Curves.decelerate,
-                percent: consumoDiario.indicadorproteina,
-                radius: 67,
-                footer: Text(
-                  '$proteinaAlcanzar gr meta',
-                  style: textfootter, // Ajusta según tus necesidades
-                ),
-                center: Text(
-                  '$proteina gr',
-                  style: textTitle, // Ajusta según tus necesidades
-                ),
-                progressColor: Colors.blue, // Ajusta según tus necesidades
-              ),
-              CircularPercentIndicator(
-                percent: consumoDiario.indicadorcalorias,
-                lineWidth: 7,
-                radius: 75,
-                footer: Text(
-                  '$caloriasAlcanzar kilocaloría',
-                  style: textfootter, // Ajusta según tus necesidades
-                ),
-                center: Text(
-                  '$calorias kcal',
-                  style: textTitle, // Ajusta según tus necesidades
-                ),
-                animateFromLastPercent: true,
-                animation: true,
-                curve: Curves.decelerate, // Ajusta según tus necesidades
-              ),
-            ],
+          _LinearProgress(
+            sizeWidth: sizeWidth,
+            consumoDiario: consumoDiario.indicadorcalorias,
+            porcentaje: calorias,
+            metaAlcanzar: caloriasAlcanzar,
+            subTitle: ' kcal',
+            title: 'Calorias',
+          ),
+          _LinearProgress(
+            sizeWidth: sizeWidth,
+            consumoDiario: consumoDiario.indicadorproteina,
+            porcentaje: proteina,
+            metaAlcanzar: proteinaAlcanzar,
+            subTitle: ' P',
+            title: 'Proteinas',
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
-                onPressed: widget.onPressedCDiario,
-                icon: const Icon(Icons.add_circle_outline_rounded),
-                label: const Text('Consumo\nDiario'),
-              ),
-              ElevatedButton.icon(
-                onPressed: widget.onPressedAlimentos,
-                icon: const Icon(Icons.add_circle_outline_rounded),
-                label: const Text('Alimentos'),
-              ),
+              _BotonesConfirmacion(
+                  onPressed: widget.onPressedCDiario!,
+                  title: 'Consumo Diario',
+                  icon: Icons.add_circle_outline_rounded),
+              _BotonesConfirmacion(
+                  onPressed: widget.onPressedAlimentos!,
+                  title: 'Alimentos',
+                  icon: Icons.add_circle_outline_rounded)
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 5,
           )
         ],
       ),
+    );
+  }
+}
+
+class _LinearProgress extends StatelessWidget {
+  final int porcentaje;
+  final int metaAlcanzar;
+  final double sizeWidth;
+  final String subTitle;
+  final String title;
+  final double consumoDiario;
+  const _LinearProgress({
+    required this.sizeWidth,
+    required this.consumoDiario,
+    required this.porcentaje,
+    required this.metaAlcanzar,
+    required this.subTitle,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTitle = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: const EdgeInsets.only(left: 10, bottom: 6),
+            child: Text(
+              title,
+              style: textTitle.titleMedium,
+            )),
+        LinearPercentIndicator(
+          width: sizeWidth * 1,
+          lineHeight: 10.0,
+          percent: consumoDiario,
+          backgroundColor: Colors.grey,
+          progressColor: const Color.fromARGB(122, 56, 142, 60),
+          barRadius: const Radius.circular(3),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Text(
+            " $porcentaje/$metaAlcanzar$subTitle",
+            style: textTitle.bodyMedium,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BotonesConfirmacion extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String title;
+  final IconData icon;
+  const _BotonesConfirmacion({
+    required this.onPressed,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      style: ButtonStyle(
+        backgroundColor: const MaterialStatePropertyAll(
+          Color(0xFF39E079),
+        ),
+        minimumSize: MaterialStateProperty.all(const Size(50, 50)),
+      ),
+      onPressed: onPressed,
+      icon: Icon(icon),
+      label: Text(title),
     );
   }
 }

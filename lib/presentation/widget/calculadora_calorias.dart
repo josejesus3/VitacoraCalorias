@@ -26,7 +26,6 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
   @override
   Widget build(BuildContext context) {
     final providerGlobal = context.read<ProviderGlobales>();
-
     final checkValidacion = context.read<ProviderGlobales>().checkValidacion;
     final colorActiveMasculino =
         context.watch<ProviderGlobales>().colorMasculino;
@@ -65,12 +64,11 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
               ),
             ],
           ),
-           const SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
             child: Column(
-              
               children: [
                 _FormularioRegistro(
                   nombreCampo: 'Altura/Cm',
@@ -86,7 +84,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                   icon: Icons.monitor_weight_outlined,
                   focus: focusPeso,
                   errorText: 'Ingresar Peso',
-                  maxLength: 4,
+                  maxLength: 5,
                 ),
                 _FormularioRegistro(
                   nombreCampo: 'Edad',
@@ -159,6 +157,7 @@ class _CalculadorCaloriasState extends State<CalculadorCalorias> {
                   focusPeso: focusPeso,
                   focusEdad: focusEdad,
                 );
+
                 showError = true;
               },
               title: 'Aceptar',
