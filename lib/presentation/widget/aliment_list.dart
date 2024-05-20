@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/domain/data/data.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
 import 'package:vitacora_calorias/provider/lista_alimentos.dart';
 
@@ -16,7 +17,8 @@ class _AlimetListaState extends State<AlimetLista> {
   Widget build(BuildContext context) {
     final consumoDiario = context.watch<ConsumoDiario>();
     final agregar = context.watch<ListaAlimentos>();
-    double subtitle = 13;
+    final textStyle = Theme.of(context).textTheme;
+
     return Expanded(
       // ignore: prefer_is_empty
       child: agregar.listAlimentos.length == 0
@@ -34,89 +36,95 @@ class _AlimetListaState extends State<AlimetLista> {
                 // Aplicar FadeInUp solo al nuevo elemento que se está agregando
 
                 return index == agregar.listAlimentos.length - 1
-                    ? Dismissible(
-                        key: Key(agregar.listAlimentos.toString()),
-                        background: Container(
-                          color: Colors.red.shade300,
-                          alignment: Alignment.centerLeft,
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.delete_forever_outlined,
-                                color: Colors.white,
-                              ),
-                              Text('Eliminar de lista')
-                            ],
-                          ),
-                        ),
-                        onDismissed: (direction) {
-                          setState(() {
-                            agregar.listAlimentos.removeAt(index);
-                            agregar.eliminarLista();
-                          });
-                        },
-                        child: FadeInDownBig(
-                          duration: const Duration(milliseconds: 500),
-                          child: Card(
-                            color: const Color.fromARGB(246, 249, 249, 249),
-                            child: ListTile(
-                              title: Text(alimentos.alimento),
-                              subtitle: Text(
-                                  '${alimentos.proteina.toString()} Proteina'),
-                              trailing: Text(
-                                '${alimentos.calorias.toString()} Calorias',
-                                style: TextStyle(fontSize: subtitle),
-                              ),
-                              onTap: () {
-                                setState(() {});
-                                consumoDiario.aumentarValores(context,
-                                    alimentos.proteina, alimentos.calorias);
-                              },
-                            ),
-                          ),
+                    ? FadeInDownBig(
+                        duration: const Duration(milliseconds: 800),
+                        child: CardList(
+                          listaAlimentos: agregar.listAlimentos,
+                          name: alimentos.alimento,
+                          onTap: () {
+                            setState(() {});
+                            consumoDiario.aumentarValores(context,
+                                alimentos.proteina, alimentos.calorias);
+                          },
+                          onDismissed: (DismissDirection direction) {
+                            setState(() {
+                              agregar.listAlimentos.removeAt(index);
+                              agregar.eliminarLista();
+                            });
+                          }, proteina: alimentos.proteina.toString(), calorias:alimentos.calorias.toString(),
                         ),
                       )
-                    : Dismissible(
-                        key: Key(agregar.listAlimentos.toString()),
-                        background: Container(
-                          color: Colors.red.shade300,
-                          alignment: Alignment.centerLeft,
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.delete_forever_outlined,
-                                color: Colors.white,
-                              ),
-                              Text('Eliminar de lista')
-                            ],
-                          ),
-                        ),
-                        onDismissed: (direction) {
-                          setState(() {
-                            agregar.listAlimentos.removeAt(index);
-                            agregar.eliminarLista();
-                          });
-                        },
-                        child: Card(
-                          color: const Color.fromARGB(246, 249, 249, 249),
-                          child: ListTile(
-                            title: Text(alimentos.alimento),
-                            subtitle: Text(
-                                '${alimentos.proteina.toString()} Proteina'),
-                            trailing: Text(
-                              '${alimentos.calorias.toString()} Calorias',
-                              style: TextStyle(fontSize: subtitle),
-                            ),
-                            onTap: () {
-                              setState(() {});
-                              consumoDiario.aumentarValores(context,
-                                  alimentos.proteina, alimentos.calorias);
-                            },
-                          ),
-                        ),
-                      );
+                    : CardList(
+                          listaAlimentos: agregar.listAlimentos,
+                          name: alimentos.alimento,
+                          onTap: () {
+                            setState(() {});
+                            consumoDiario.aumentarValores(context,
+                                alimentos.proteina, alimentos.calorias);
+                          },
+                          onDismissed: (DismissDirection direction) {
+                            setState(() {
+                              agregar.listAlimentos.removeAt(index);
+                              agregar.eliminarLista();
+                            });
+                          }, proteina: alimentos.proteina.toString(), calorias:alimentos.calorias.toString(),
+                        );
               },
             ),
+    );
+  }
+}
+
+class CardList extends StatelessWidget {
+  final List<Alimentos> listaAlimentos;
+  final String name;
+  final String proteina;
+  final String calorias;
+  final GestureTapCallback onTap;
+  final DismissDirectionCallback onDismissed;
+  const CardList(
+      {super.key,
+      required this.listaAlimentos,
+      required this.name,
+      required this.onTap,
+      required this.onDismissed,
+      required this.proteina,
+      required this.calorias});
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme;
+    return Dismissible(
+      key: Key(listaAlimentos.toString()),
+      background: Container(
+        color: Colors.red.shade300,
+        alignment: Alignment.centerLeft,
+        child: const Row(
+          children: [
+            Icon(
+              Icons.delete_forever_outlined,
+              color: Colors.white,
+            ),
+            Text('Eliminar de lista')
+          ],
+        ),
+      ),
+      onDismissed: onDismissed,
+      child: Card(
+        color: const Color.fromARGB(246, 249, 249, 249),
+        child: ListTile(
+          title: Text(
+            name,
+            style: textStyle.bodyLarge,
+          ),
+          subtitle: Text('$proteina Proteina'),
+          trailing: Text(
+            '$calorias Calorias',
+            style: textStyle.bodyMedium,
+          ),
+          onTap: onTap,
+        ),
+      ),
     );
   }
 }

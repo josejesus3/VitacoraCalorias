@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:vitacora_calorias/presentation/widget/calculadora_calorias.dart';
 import 'package:vitacora_calorias/presentation/widget/resultado_personal.dart';
@@ -25,8 +26,10 @@ class _PageViewRequisitosState extends State<PageViewRequisitos> {
             pageSnapping: false,
             controller: _controller,
             children: [
-              CalculadorCalorias(
-                controller: _controller,
+              ElasticInRight(
+                child: CalculadorCalorias(
+                  controller: _controller,
+                ),
               ),
               ResultadoPersonal(
                 controller: _controller,
