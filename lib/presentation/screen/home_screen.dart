@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const List<Widget> viewRoutes = [
       VitacoraCalorias(),
-      ProductosAlimenticios(),
+      ProductosAliment(),
     ];
     return Scaffold(
       body: IndexedStack(

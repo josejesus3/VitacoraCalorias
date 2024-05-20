@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/config/theme/app_theme.dart';
-import 'package:vitacora_calorias/presentation/screen/vitacora_calorias.dart';
+import 'package:vitacora_calorias/presentation/screen/view/vitacora_calorias.dart';
 import 'package:vitacora_calorias/provider/formula.dart';
 
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
