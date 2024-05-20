@@ -4,6 +4,8 @@ class FormulaProvider extends ChangeNotifier {
   double resultado = 0;
   double consumoBajarPeso = 0;
   double consumoSubirPeso = 0;
+  double proteinaSubirPeso=0;
+  double proteinaMantener=0;
 
   void calcularHombre({
     required int nuevaAltura,
@@ -33,7 +35,7 @@ class FormulaProvider extends ChangeNotifier {
           (6.25 * nuevaAltura) -
           (5 * nuevaEdad);
       resultado = calculo * nuevaGET;
-    } else if (nuevaEdad >= 51 && nuevaEdad <= 80) {
+    } else if (nuevaEdad >= 51 && nuevaEdad <= 90) {
       double calculo = nuevaMB +
           (9.247 * nuevoPeso) +
           (3.098 * nuevaAltura) -
@@ -87,9 +89,19 @@ class FormulaProvider extends ChangeNotifier {
     consumoBajarPeso = resultado - 500;
     notifyListeners();
   }
+  
 
   void calculoSubirPeso() {
     consumoSubirPeso = resultado + 500;
     notifyListeners();
   }
+  void calculoMantener(double nuevoPeso) {
+    proteinaMantener = nuevoPeso*2;
+    notifyListeners();
+  }
+  void calculoSubirProteina(double nuevaEdad) {
+    proteinaSubirPeso = nuevaEdad*2;
+    notifyListeners();
+  }
+  
 }
