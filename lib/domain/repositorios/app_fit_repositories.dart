@@ -1,5 +1,5 @@
-import 'package:vitacora_calorias/infrestuctura/model/frutas_verduras.dart';
+import 'package:vitacora_calorias/domain/entities/api_frutas_verduras.dart';
 
 abstract class AppFitRepositories {
-  Future<List<FrutasVerduras>> getFrutasVerduras();
+  Future<ApiFrutasVerduras> getFrutasVerduras();
 }
