@@ -7,7 +7,7 @@ class BottonNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void selectIndex(int currentIndex) {
+    void selectIndex(BuildContext context, int currentIndex) {
       switch (currentIndex) {
         case 0:
           context.go('/home/0');
@@ -22,7 +22,7 @@ class BottonNavigator extends StatelessWidget {
     }
 
     return BottomNavigationBar(
-      onTap: (value) => selectIndex(value),
+      onTap: (value) => selectIndex(context, value),
       currentIndex: pageView,
       items: const [
         BottomNavigationBarItem(label: '', icon: Icon(Icons.house_outlined)),

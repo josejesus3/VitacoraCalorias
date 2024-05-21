@@ -1,3 +1,19 @@
+class FrutasVerduras {
+  final ApiFrutasVerduras frutasVerduras;
+
+  FrutasVerduras({
+    required this.frutasVerduras,
+  });
+
+  factory FrutasVerduras.fromJson(Map<String, dynamic> json) => FrutasVerduras(
+        frutasVerduras: ApiFrutasVerduras.fromJson(json["Frutas_Verduras"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Frutas_Verduras": frutasVerduras.toJson(),
+      };
+}
+
 class ApiFrutasVerduras {
   final List<String> frutas;
   final List<String> verduras;

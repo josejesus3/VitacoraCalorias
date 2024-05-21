@@ -4,6 +4,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vitacora_calorias/domain/dataSources/app_fit_datasources.dart';
 import 'package:vitacora_calorias/presentation/screen/view/page_view_requisitos.dart';
 import 'package:vitacora_calorias/presentation/widget/aliment_list.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
@@ -27,6 +28,7 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
     context.read<ListaAlimentos>().cargarLista();
     // Cargar la vista de página al iniciar la aplicación
     context.read<ConsumoDiario>().cargarPageView();
+    context.read<AppFitDataSources>().getFrutasVerduras();
   }
 
   @override
