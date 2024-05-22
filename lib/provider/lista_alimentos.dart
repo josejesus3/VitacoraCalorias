@@ -12,19 +12,28 @@ class ListaAlimentos extends ChangeNotifier {
   // Método para agregar alimentos a la lista y guardar en SharedPreferences
   void agregarAlimentos(String alimento, int proteina, int calorias) {
     // Crear una nueva instancia de Alimentos con los parámetros proporcionados
-    Alimentos nuevoAlimento =
-        Alimentos(alimento: alimento, proteina: proteina, calorias: calorias);
+    bool alimentoExistente = false;
+    for (int i = 0; i < listAlimentos.length; i++) {
+      if (listAlimentos[i].alimento.contains(alimento)) {
+        alimentoExistente = true;
+      }
+    }
 
-    // Agregar la nueva instancia a la lista existente
-    listAlimentos.add(nuevoAlimento);
+    if (!alimentoExistente) {
+      Alimentos nuevoAlimento =
+          Alimentos(alimento: alimento, proteina: proteina, calorias: calorias);
 
-    // Convertir la lista de alimentos a una lista de cadenas JSON
-    alimentoList = listAlimentos.map((alimento) {
-      return jsonEncode(alimento.toMap()); 
-    }).toList();
+      // Agregar la nueva instancia a la lista existente
+      listAlimentos.add(nuevoAlimento);
 
-    // Guardar la lista de cadenas JSON en SharedPreferences
-    _guardarLista();
+      // Convertir la lista de alimentos a una lista de cadenas JSON
+      alimentoList = listAlimentos.map((alimento) {
+        return jsonEncode(alimento.toMap());
+      }).toList();
+
+      // Guardar la lista de cadenas JSON en SharedPreferences
+      _guardarLista();
+    } else {}
 
     // Notificar a los oyentes que la lista ha cambiado
     notifyListeners();

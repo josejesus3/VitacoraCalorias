@@ -17,7 +17,7 @@ class _AlimetListaState extends State<AlimetLista> {
   Widget build(BuildContext context) {
     final consumoDiario = context.watch<ConsumoDiario>();
     final agregar = context.watch<ListaAlimentos>();
-    final textStyle = Theme.of(context).textTheme;
+   
 
     return Expanded(
       // ignore: prefer_is_empty

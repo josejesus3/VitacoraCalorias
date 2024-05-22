@@ -4,11 +4,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vitacora_calorias/domain/dataSources/app_fit_datasources.dart';
 import 'package:vitacora_calorias/presentation/screen/view/page_view_requisitos.dart';
 import 'package:vitacora_calorias/presentation/widget/aliment_list.dart';
 import 'package:vitacora_calorias/provider/consumo_diario.dart';
-import 'package:vitacora_calorias/provider/lista_alimentos.dart';
 import 'package:vitacora_calorias/presentation/widget/container_vitacora.dart';
 import 'package:vitacora_calorias/presentation/widget/shared/formulario.dart';
 
@@ -25,15 +23,16 @@ class _VitacoraCaloriasState extends State<VitacoraCalorias> {
     super.initState();
 
     // Cargar la lista de alimentos al iniciar la aplicación
-    context.read<ListaAlimentos>().cargarLista();
+    //context.read<ListaAlimentos>().cargarLista();
     // Cargar la vista de página al iniciar la aplicación
-    context.read<ConsumoDiario>().cargarPageView();
-    context.read<AppFitDataSources>().getFrutasVerduras();
+  
+    //context.read<AppFitDataSources>().getFrutasVerduras();
   }
 
   @override
   Widget build(BuildContext context) {
     // Obtener el valor de los proveedores
+    
     final reset = context.watch<ConsumoDiario>();
     final consumoDiario = context.watch<ConsumoDiario>();
     final pageView = context.read<ConsumoDiario>().checkFirstTime;
