@@ -13,8 +13,8 @@ class AppFitDataSources extends ChangeNotifier {
   Future getFrutasVerduras() async {
     final response = await dio.get('FrutasVerduras/get');
     final json = FrutasVerduras.fromJson(response.data);
-    responseFrutas = json.frutas;
-    responseVerduras = json.verduras;
+    responseFrutas = json.frutasVerduras.frutas;
+    responseVerduras = json.frutasVerduras.verduras;
     notifyListeners();
   }
 }

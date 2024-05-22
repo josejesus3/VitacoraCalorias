@@ -11,12 +11,25 @@ class ProductosAliment extends StatelessWidget {
     final verduras = context.watch<AppFitDataSources>().responseVerduras;
     print(frutas);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ...frutas.map(
-          (frutas) => SizedBox(
-            width: 100,
-            height: 100,
-            child: Text(frutas),
+          (frutas) => Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Text(frutas),
+            ),
+          ),
+        ),
+
+         ...verduras.map(
+          (verduras) => Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Text(verduras),
+            ),
           ),
         )
       ],
