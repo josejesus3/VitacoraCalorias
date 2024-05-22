@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/domain/dataSources/app_fit_datasources.dart';
 import 'package:vitacora_calorias/provider/lista_alimentos.dart';
@@ -37,7 +39,7 @@ class _ProductosAlimentState extends State<ProductosAliment>
         backgroundColor: Colors.white,
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(
               icon: Icon(Icons.cloud_outlined),
             ),
@@ -53,17 +55,18 @@ class _ProductosAlimentState extends State<ProductosAliment>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          Center(
-            child: _FrutasVerduras(
+          Column(
+            children: [
+              _FrutasVerduras(
                 textStyle: textStyle,
-                frutas: frutas,
-                agregar: agregar,
-                verduras: verduras),
+                listaAlimentos: frutas,
+              ),
+            ],
           ),
-          Center(
+          const Center(
             child: Text("It's rainy here"),
           ),
-          Center(
+          const Center(
             child: Text("It's sunny here"),
           ),
         ],
@@ -73,73 +76,35 @@ class _ProductosAlimentState extends State<ProductosAliment>
 }
 
 class _FrutasVerduras extends StatelessWidget {
+  final TextTheme textStyle;
+  final List<String> listaAlimentos;
+
   const _FrutasVerduras({
     super.key,
     required this.textStyle,
-    required this.frutas,
-    required this.agregar,
-    required this.verduras,
+    required this.listaAlimentos,
   });
-
-  final TextTheme textStyle;
-  final List<String> frutas;
-  final ListaAlimentos agregar;
-  final List<String> verduras;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '  Frutas',
-            style: textStyle.titleLarge,
-          ),
-          ...frutas.map(
-            (frutas) => Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  agregar.agregarAlimentos(frutas, 20, 300);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  width: double.infinity,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(frutas),
-                ),
-              ),
+      child: ListView.builder(
+        itemCount: listaAlimentos.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              width: double.infinity,
+              height: 70,
+              decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Text(listaAlimentos[index]),
             ),
-          ),
-          Text(
-            '  Verduras',
-            style: textStyle.titleLarge,
-          ),
-          ...verduras.map(
-            (verduras) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                width: double.infinity,
-                height: 70,
-                decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Text(verduras),
-              ),
-            ),
-          )
-        ],
+          );
+        },
       ),
     );
   }
