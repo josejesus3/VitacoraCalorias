@@ -27,7 +27,7 @@ class BottonNavigator extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(label: '', icon: Icon(Icons.house_outlined)),
         BottomNavigationBarItem(
-            label: '', icon: Icon(Icons.format_list_bulleted))
+            label: '', icon: Icon(Icons.shopping_bag_outlined))
       ],
     );
   }

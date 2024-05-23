@@ -17,7 +17,6 @@ class _AlimetListaState extends State<AlimetLista> {
   Widget build(BuildContext context) {
     final consumoDiario = context.watch<ConsumoDiario>();
     final agregar = context.watch<ListaAlimentos>();
-   
 
     return Expanded(
       // ignore: prefer_is_empty
@@ -51,24 +50,28 @@ class _AlimetListaState extends State<AlimetLista> {
                               agregar.listAlimentos.removeAt(index);
                               agregar.eliminarLista();
                             });
-                          }, proteina: alimentos.proteina.toString(), calorias:alimentos.calorias.toString(),
+                          },
+                          proteina: alimentos.proteina.toString(),
+                          calorias: alimentos.calorias.toString(),
                         ),
                       )
                     : CardList(
-                          listaAlimentos: agregar.listAlimentos,
-                          name: alimentos.alimento,
-                          onTap: () {
-                            setState(() {});
-                            consumoDiario.aumentarValores(context,
-                                alimentos.proteina, alimentos.calorias);
-                          },
-                          onDismissed: (DismissDirection direction) {
-                            setState(() {
-                              agregar.listAlimentos.removeAt(index);
-                              agregar.eliminarLista();
-                            });
-                          }, proteina: alimentos.proteina.toString(), calorias:alimentos.calorias.toString(),
-                        );
+                        listaAlimentos: agregar.listAlimentos,
+                        name: alimentos.alimento,
+                        onTap: () {
+                          setState(() {});
+                          consumoDiario.aumentarValores(
+                              context, alimentos.proteina, alimentos.calorias);
+                        },
+                        onDismissed: (DismissDirection direction) {
+                          setState(() {
+                            agregar.listAlimentos.removeAt(index);
+                            agregar.eliminarLista();
+                          });
+                        },
+                        proteina: alimentos.proteina.toString(),
+                        calorias: alimentos.calorias.toString(),
+                      );
               },
             ),
     );
@@ -94,35 +97,37 @@ class CardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
-    return Dismissible(
-      key: Key(listaAlimentos.toString()),
-      background: Container(
-        color: Colors.red.shade300,
-        alignment: Alignment.centerLeft,
-        child: const Row(
-          children: [
-            Icon(
-              Icons.delete_forever_outlined,
-              color: Colors.white,
-            ),
-            Text('Eliminar de lista')
-          ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Dismissible(
+        key: Key(listaAlimentos.toString()),
+        background: Container(
+          color: Colors.red.shade300,
+          alignment: Alignment.centerLeft,
+          child: const Row(
+            children: [
+              Icon(
+                Icons.delete_forever_outlined,
+                color: Colors.white,
+              ),
+              Text('Eliminar de lista')
+            ],
+          ),
         ),
-      ),
-      onDismissed: onDismissed,
-      child: Card(
-        color: const Color.fromARGB(246, 249, 249, 249),
-        child: ListTile(
-          title: Text(
-            name,
-            style: textStyle.bodyLarge,
+        onDismissed: onDismissed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: ListTile(
+            title: Text(
+              name,
+              style: textStyle.bodyLarge,
+            ),
+            subtitle: Text(' $proteina P/$calorias kcal'),
+            trailing: Image.asset(
+              'assets/alimentos.png',
+              fit: BoxFit.cover,
+            ),
           ),
-          subtitle: Text('$proteina Proteina'),
-          trailing: Text(
-            '$calorias Calorias',
-            style: textStyle.bodyMedium,
-          ),
-          onTap: onTap,
         ),
       ),
     );
