@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<ListaAlimentos>().cargarLista();
     // Cargar la vista de página al iniciar la aplicación
     context.read<ConsumoDiario>().cargarPageView();
-    context.read<AppFitDataSources>().getFrutasVerduras();
+   // context.read<AppFitDataSources>().getFrutasVerduras();
   }
 
   @override

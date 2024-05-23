@@ -18,7 +18,7 @@ class _ProductosAlimentState extends State<ProductosAliment>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -29,7 +29,7 @@ class _ProductosAlimentState extends State<ProductosAliment>
 
   @override
   Widget build(BuildContext context) {
-    final frutas = context.watch<AppFitDataSources>().responseJson;
+    // final frutas = context.watch<AppFitDataSources>().responseJson;
     final agregar = context.watch<ListaAlimentos>();
     final textStyle = Theme.of(context).textTheme;
 
@@ -37,32 +37,46 @@ class _ProductosAlimentState extends State<ProductosAliment>
       appBar: AppBar(
         backgroundColor: Colors.white,
         bottom: TabBar(
+          tabAlignment: TabAlignment.start,
+          isScrollable: true,
+          
           controller: _tabController,
           tabs: const [
             Tab(
-              icon: Icon(Icons.cloud_outlined),
+              text: 'Frutas y Verduras',
             ),
             Tab(
-              icon: Icon(Icons.beach_access_sharp),
+              text: 'Cereales',
             ),
             Tab(
-              icon: Icon(Icons.brightness_5_sharp),
+              text: 'Frutos secos',
+            ),
+            Tab(
+              text: 'Origen Animal',
+            ),
+            Tab(
+              text: 'Suplementos',
             ),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: <Widget>[
-          _FrutasVerduras(
-            textStyle: textStyle,
-            listaAlimentos: frutas,
-          ),
-          const Center(
+        children: const <Widget>[
+          Center(
             child: Text("It's rainy here"),
           ),
-          const Center(
+          Center(
+            child: Text("It's rainy here"),
+          ),
+          Center(
             child: Text("It's sunny here"),
+          ),
+          Center(
+            child: Text("It's rainy here"),
+          ),
+          Center(
+            child: Text("It's rainy here"),
           ),
         ],
       ),
@@ -88,7 +102,7 @@ class _FrutasVerduras extends StatelessWidget {
         itemBuilder: (context, index) {
           final alimentos = listaAlimentos[index];
 
-            print(alimentos.name);
+          print(alimentos.name);
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Container(
