@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/domain/dataSources/app_fit_datasources.dart';
-import 'package:vitacora_calorias/domain/entities/api_frutas_verduras.dart';
-import 'package:vitacora_calorias/domain/entities/api_origen_animal.dart';
-import 'package:vitacora_calorias/provider/lista_alimentos.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class ProductosAliment extends StatefulWidget {
   const ProductosAliment({super.key});
@@ -64,14 +62,14 @@ class _ProductosAlimentState extends State<ProductosAliment>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          _FrutasVerduras(listaAlimentos: frutas),
+          _ListaAlimentos(listaAlimentos: frutas),
           const Center(
             child: Text("It's rainy here"),
           ),
           const Center(
             child: const Text("It's sunny here"),
           ),
-          _FrutasVerduras(listaAlimentos: origenAnimal),
+          _ListaAlimentos(listaAlimentos: origenAnimal),
           const Center(
             child: Text("It's rainy here"),
           ),
@@ -81,10 +79,10 @@ class _ProductosAlimentState extends State<ProductosAliment>
   }
 }
 
-class _FrutasVerduras extends StatelessWidget {
+class _ListaAlimentos extends StatelessWidget {
   final List<dynamic> listaAlimentos;
 
-  const _FrutasVerduras({
+  const _ListaAlimentos({
     required this.listaAlimentos,
   });
 

@@ -4,8 +4,7 @@ import 'package:vitacora_calorias/domain/dataSources/app_fit_datasources.dart';
 import 'package:vitacora_calorias/presentation/screen/view/productos_alimenticios.dart';
 import 'package:vitacora_calorias/presentation/screen/view/vitacora_calorias.dart';
 import 'package:vitacora_calorias/presentation/widget/shared/botton_navigator.dart';
-import 'package:vitacora_calorias/provider/consumo_diario.dart';
-import 'package:vitacora_calorias/provider/lista_alimentos.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   final int pageIndex;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/presentation/widget/shared/list_title_content.dart';
-import 'package:vitacora_calorias/provider/formula.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class ValidacionesUtil {
   static void validar({
@@ -107,9 +107,8 @@ class ValidacionesUtil {
     if (colorMasculino == true) {
       controller.nextPage(
           duration: const Duration(milliseconds: 420),
-         //curve: Curves.easeInCirc
-         curve: Curves.decelerate
-          );
+          //curve: Curves.easeInCirc
+          curve: Curves.decelerate);
       calculo.calcularHombre(
         nuevaAltura: altura,
         nuevoPeso: peso,

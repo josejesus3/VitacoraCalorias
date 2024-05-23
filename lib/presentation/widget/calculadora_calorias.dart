@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/domain/services/validacion.dart';
-
-import 'package:vitacora_calorias/provider/provider_globales.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class CalculadorCalorias extends StatefulWidget {
   final PageController controller;

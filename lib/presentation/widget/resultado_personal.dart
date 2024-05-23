@@ -2,8 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/presentation/widget/shared/boton_confirmacion.dart';
-import 'package:vitacora_calorias/provider/consumo_diario.dart';
-import 'package:vitacora_calorias/provider/formula.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class ResultadoPersonal extends StatelessWidget {
   final PageController controller;
@@ -32,7 +31,6 @@ class ResultadoPersonal extends StatelessWidget {
                 alert.metaAlcanzar(calculo.proteinaMantener.toInt(),
                     calculo.consumoBajarPeso, true);
                 consumoDiario.primerCalculo(true);
-               
               } else {
                 alert.metaAlcanzar(calculo.proteinaMantener.toInt(),
                     calculo.consumoBajarPeso, true);
@@ -55,7 +53,6 @@ class ResultadoPersonal extends StatelessWidget {
                 alert.metaAlcanzar(
                     calculo.proteinaMantener.toInt(), calculo.resultado, true);
                 consumoDiario.primerCalculo(true);
-               
               } else {
                 alert.metaAlcanzar(
                     calculo.proteinaMantener.toInt(), calculo.resultado, true);
@@ -79,7 +76,6 @@ class ResultadoPersonal extends StatelessWidget {
                 alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(),
                     calculo.consumoSubirPeso, true);
                 consumoDiario.primerCalculo(true);
-               
               } else {
                 alert.metaAlcanzar(calculo.proteinaSubirPeso.toInt(),
                     calculo.consumoSubirPeso, true);

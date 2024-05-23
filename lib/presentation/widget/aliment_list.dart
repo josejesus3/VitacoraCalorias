@@ -2,8 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vitacora_calorias/domain/data/data.dart';
-import 'package:vitacora_calorias/provider/consumo_diario.dart';
-import 'package:vitacora_calorias/provider/lista_alimentos.dart';
+import 'package:vitacora_calorias/provider/provider.dart';
 
 class AlimetLista extends StatefulWidget {
   const AlimetLista({super.key});
