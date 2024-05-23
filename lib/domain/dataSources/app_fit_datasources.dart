@@ -7,14 +7,19 @@ class AppFitDataSources extends ChangeNotifier {
     baseUrl: 'https://appfit.onrender.com/',
   ));
 
-  List<String> responseFrutas = [];
-  List<String> responseVerduras = [];
+  List<Resultado> responseJson=[];
 
   Future getFrutasVerduras() async {
-    final response = await dio.get('FrutasVerduras/get');
-    final json = FrutasVerduras.fromJson(response.data);
-    responseFrutas = json.frutasVerduras.frutas;
-    responseVerduras = json.frutasVerduras.verduras;
-    notifyListeners();
+    try {
+      final response = await dio.get('FrutasVerduras/get');
+      final json = FrutasVerduras.fromJson(response.data).frutasVerduras;
+      print(json.resultado);
+      responseJson = json.resultado;
+      
+      notifyListeners();
+    } catch (e) {
+      // Manejo de errores, como imprimir el error en la consola
+      print('Error al obtener datos: $e');
+    }
   }
 }
