@@ -98,33 +98,36 @@ class CardList extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Dismissible(
-        key: Key(listaAlimentos.toString()),
-        background: Container(
-          color: Colors.red.shade300,
-          alignment: Alignment.centerLeft,
-          child: const Row(
-            children: [
-              Icon(
-                Icons.delete_forever_outlined,
-                color: Colors.white,
-              ),
-              Text('Eliminar de lista')
-            ],
-          ),
-        ),
-        onDismissed: onDismissed,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: ListTile(
-            title: Text(
-              name,
-              style: textStyle.bodyLarge,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Dismissible(
+          key: Key(listaAlimentos.toString()),
+          background: Container(
+            color: Colors.red.shade300,
+            alignment: Alignment.centerLeft,
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.delete_forever_outlined,
+                  color: Colors.white,
+                ),
+                Text('Eliminar de lista')
+              ],
             ),
-            subtitle: Text(' $proteina P/$calorias kcal'),
-            trailing: Image.asset(
-              'assets/alimentos.png',
-              fit: BoxFit.cover,
+          ),
+          onDismissed: onDismissed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListTile(
+              title: Text(
+                name,
+                style: textStyle.bodyLarge,
+              ),
+              subtitle: Text(' $proteina P/$calorias kcal'),
+              trailing: Image.asset(
+                'assets/alimentos.png',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
